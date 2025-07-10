@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Für Daria 💖</title>
+  <style>
+    body {
+      background: #ffeaf4;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 50px;
+      color: #d63384;
+    }
+
+    h1 {
+      font-size: 3rem;
+      animation: pulse 2s infinite;
+    }
+
+    p {
+      font-size: 1.4rem;
+      margin-top: 30px;
+    }
+
+    .heart {
+      width: 100px;
+      height: 90px;
+      background: red;
+      position: relative;
+      margin: 50px auto;
+      transform: rotate(-45deg);
+      animation: beat 1s infinite;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      width: 100px;
+      height: 90px;
+      background: red;
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    .heart::before {
+      top: -50px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 50px;
+      top: 0;
+    }
+
+    @keyframes beat {
+      0%, 100% { transform: scale(1) rotate(-45deg); }
+      50% { transform: scale(1.1) rotate(-45deg); }
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 1rem;
+      color: #a00050;
+    }
+  </style>
+</head>
+<body>
+  <div class="heart"></div>
+  <h1>Für Daria 💖</h1>
+  <p>
+    Ich liebe dich von ganzem Herzen, Daria.<br />
+    Du machst mein Leben heller, schöner und voller Liebe.<br />
+    Jeder Moment mit dir ist ein Geschenk. 💕<br />
+    Für immer dein.<br />
+    <strong>– Dein Schatz</strong>
+  </p>
+  <footer>
+    🌹 Mit Liebe gemacht
+  </footer>
+</body>
+</html>
