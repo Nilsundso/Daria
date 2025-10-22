@@ -5,33 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Für Daria – mit Liebe</title>
   <style>
+    :root {
+      --grad1: #fffafc;
+      --grad2: #fde2e4;
+    }
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #fffafc;
+      background: linear-gradient(120deg, var(--grad1), var(--grad2));
+      background-size: 200% 200%;
       color: #333;
       scroll-behavior: smooth;
-      transition: background-color 1s ease;
+      transition: background 1.5s ease;
+      animation: gradientShift 15s ease infinite;
+      overflow-x: hidden;
+    }
+    @keyframes gradientShift {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
     }
     header {
       text-align: center;
       padding: 2rem;
-      background-color: #fde2e4;
+      background-color: rgba(255,255,255,0.5);
+      backdrop-filter: blur(6px);
       transition: background-color 1s ease;
     }
-    header h1 {
-      margin-bottom: 0.5rem;
-    }
+    header h1 {margin-bottom: .5rem;}
     .intro {
       text-align: center;
       font-size: 1.2rem;
       padding: 1rem 2rem;
-      background-color: #fff0f5;
+      background-color: rgba(255,240,245,0.6);
+      backdrop-filter: blur(4px);
     }
     section {
       padding: 3rem 2rem;
       max-width: 900px;
       margin: 0 auto;
+      position: relative;
+      z-index: 2;
     }
     section h2 {
       text-align: center;
@@ -39,171 +53,254 @@
       color: #e75480;
     }
     .love-list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 2rem;
+      display:flex; flex-wrap:wrap; justify-content:center; gap:2rem;
     }
     .love-list div {
-      background: #ffe5ec;
-      padding: 1rem;
-      border-radius: 10px;
-      text-align: center;
-      width: 200px;
-      transition: transform 0.3s;
+      background:#ffe5ec; padding:1rem; border-radius:10px;
+      text-align:center; width:200px; transition:transform .3s;
     }
-    .love-list div:hover {
-      transform: scale(1.05);
-    }
+    .love-list div:hover {transform:scale(1.05);}
     .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1rem;
     }
     .gallery img {
-      width: 100%;
-      border-radius: 12px;
-      transition: transform 0.3s, box-shadow 0.3s;
+      width:100%; border-radius:12px;
+      transition:transform .3s, box-shadow .3s;
     }
-    .gallery img:hover {
-      transform: scale(1.03);
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    }
+    .gallery img:hover {transform:scale(1.03); box-shadow:0 0 15px rgba(0,0,0,.2);}
     footer {
-      text-align: center;
-      padding: 2rem;
-      background-color: #fde2e4;
-      font-style: italic;
+      text-align:center; padding:2rem;
+      background-color:rgba(253,226,228,0.7);
+      font-style:italic; backdrop-filter: blur(4px);
+    }
+    /* Musiksteuerung */
+    .music-control{text-align:center;margin:2rem auto;}
+    .music-control button{
+      background-color:#ff5e6c;color:white;padding:12px 24px;border:none;
+      border-radius:30px;cursor:pointer;font-size:1.1em;margin:.5rem;
+      transition:background-color .3s ease,transform .2s;
+    }
+    .music-control button:hover{background-color:#e14c5a;transform:scale(1.05);}
+    .music-description{text-align:center;font-size:1.1rem;margin-top:1rem;
+      padding:1rem;opacity:0;transition:opacity 1s ease;}
+    .music-description.show{opacity:1;}
+
+    /* Canvas für animierten Hintergrund */
+    #bgCanvas{
+      position:fixed;top:0;left:0;width:100%;height:100%;
+      z-index:0;pointer-events:none;
     }
 
-    /* Musiksteuerung */
-    .music-control {
-      text-align: center;
-      margin: 2rem auto;
+    /* Tic Tac Toe */
+    #game {
+      text-align:center;
     }
-    .music-control button {
-      background-color: #ff5e6c;
-      color: white;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      font-size: 1.1em;
-      margin: 0.5rem;
-      transition: background-color 0.3s ease, transform 0.2s;
+    #board {
+      display:grid;
+      grid-template-columns:repeat(3,100px);
+      grid-gap:5px;
+      justify-content:center;
+      margin:20px auto;
     }
-    .music-control button:hover {
-      background-color: #e14c5a;
-      transform: scale(1.05);
+    .cell {
+      width:100px; height:100px;
+      background:rgba(255,255,255,0.7);
+      font-size:2.5rem; display:flex;
+      align-items:center; justify-content:center;
+      cursor:pointer; border-radius:12px;
+      transition:background .3s;
     }
-    .music-description {
-      text-align: center;
-      font-size: 1.1rem;
-      margin-top: 1rem;
-      padding: 1rem;
-      opacity: 0;
-      transition: opacity 1s ease;
-    }
-    .music-description.show {
-      opacity: 1;
-    }
+    .cell:hover{background:rgba(255,255,255,0.9);}
   </style>
 </head>
 <body>
+<canvas id="bgCanvas"></canvas>
 
-  <!-- Musiksteuerung -->
-  <section>
-    <h2>🎶 Unsere Musikmomente</h2>
-    <div class="music-control">
-      <button onclick="playMusic(1)">Musik 1</button>
-      <button onclick="playMusic(2)">Musik 2</button>
-      <button onclick="playMusic(3)">Musik 3</button>
-      <button onclick="playMusic(4)">Musik 4</button>
-      <button onclick="playMusic(5)">Musik 5</button>
-      <button onclick="playMusic(6)">Musik 6</button>
-    </div>
-
-    <div class="music-description" id="musicText"></div>
-
-    <audio id="audio" controls loop style="display:block; margin: 1rem auto;">
-      Dein Browser unterstützt keine Musik.
-    </audio>
-  </section>
-
-  <header>
-    <img src="Titelbild.jpg" alt="Titelbild" style="max-width: 60%; border-radius: 20px;" />
-    <h1>Für Daria – mit Liebe</h1>
-  </header>
-
-  <div class="intro">
-    Diese Seite ist nur für dich Daria – als Erinnerung, Liebeserklärung und Dankeschön dafür, dass du so viel Liebe für mich bereithälst.
+<section>
+  <h2>🎶 Unsere Musikmomente</h2>
+  <div class="music-control">
+    <button onclick="playMusic(1)">Musik 1</button>
+    <button onclick="playMusic(2)">Musik 2</button>
+    <button onclick="playMusic(3)">Musik 3</button>
+    <button onclick="playMusic(4)">Musik 4</button>
+    <button onclick="playMusic(5)">Musik 5</button>
+    <button onclick="playMusic(6)">Musik 6</button>
   </div>
+  <div class="music-description" id="musicText"></div>
+  <audio id="audio" controls loop style="display:block;margin:1rem auto;">
+    Dein Browser unterstützt keine Musik.
+  </audio>
+</section>
 
-  <section>
-    <h2>Unser erstes Kapitel</h2>
-    <p>In einem wunderschönen Sommer haben wir uns auf den Medimeisterschaften kennengelernt. Zwischen Musik, Lachen und Sonnenstrahlen begegneten wir uns und ahnten damals nicht, wie tief unsere Verbindung einmal werden würde. Mit der Zeit lernten wir uns immer besser kennen und aus einer Begegnung wurde Zuneigung – aus Zuneigung Liebe.</p>
-  </section>
+<header>
+  <img src="Titelbild.jpg" alt="Titelbild" style="max-width:60%;border-radius:20px;" />
+  <h1>Für Daria – mit Liebe</h1>
+</header>
 
-  <section>
-    <h2>Was ich an dir liebe</h2>
-    <div class="love-list">
-      <div>❤️ Deine Fürsorglichkeit</div>
-      <div>🌟 Deine Aufmerksamkeit</div>
-      <div>🤍 Deine Ehrlichkeit</div>
-      <div>🔒 Deine Treue</div>
-      <div>💖 Die Liebe, die du mir jeden Tag schenkst</div>
-    </div>
-  </section>
+<div class="intro">
+  Diese Seite ist nur für dich Daria – als Erinnerung, Liebeserklärung und Dankeschön dafür, dass du so viel Liebe für mich bereithälst.
+</div>
 
-  <section>
-    <h2>Wunderschöne Momente mit dir!</h2>
-    <div class="gallery">
-      <img src="2.jpg" alt="Moment 2" />
-      <img src="4.jpg" alt="Moment 4" />
-      <img src="5.jpg" alt="Moment 5" />
-    </div>
-  </section>
+<section>
+  <h2>Unser erstes Kapitel</h2>
+  <p>In einem wunderschönen Sommer haben wir uns auf den Medimeisterschaften kennengelernt. Zwischen Musik, Lachen und Sonnenstrahlen begegneten wir uns und ahnten damals nicht, wie tief unsere Verbindung einmal werden würde. Mit der Zeit lernten wir uns immer besser kennen und aus einer Begegnung wurde Zuneigung – aus Zuneigung Liebe.</p>
+</section>
 
-  <section>
-    <h2>Für die Zukunft</h2>
-    <p>Daria, es werden immer wieder Hindernisse auf uns zukommen, doch dein Strahlen, deine Zuneigung, einfach alles Positive was du immer wieder mit mir teilst und mich Tag für Tag spüren lässt gibt mir und hoffentlich auch dir die Kraft jedes Hindernis hinter uns zu lassen, damit wir beide zusammen in die Zukunft schreiten können.<br><br>Ich liebe dich,<br>dein Nils ❤️</p>
-  </section>
+<section>
+  <h2>Was ich an dir liebe</h2>
+  <div class="love-list">
+    <div>❤️ Deine Fürsorglichkeit</div>
+    <div>🌟 Deine Aufmerksamkeit</div>
+    <div>🤍 Deine Ehrlichkeit</div>
+    <div>🔒 Deine Treue</div>
+    <div>💖 Die Liebe, die du mir jeden Tag schenkst</div>
+  </div>
+</section>
 
-  <footer>
-    "Vielleicht sind wir wie Kühe und Nilpferde – völlig verschieden. Doch gerade deshalb ergänzen wir uns so wunderbar."
-  </footer>
+<section>
+  <h2>Wunderschöne Momente mit dir!</h2>
+  <div class="gallery">
+    <img src="2.jpg" alt="Moment 2" />
+    <img src="4.jpg" alt="Moment 4" />
+    <img src="5.jpg" alt="Moment 5" />
+  </div>
+</section>
 
-  <script>
-    const audio = document.getElementById("audio");
-    const musicText = document.getElementById("musicText");
-    const body = document.body;
-    const header = document.querySelector("header");
+<section>
+  <h2>Für die Zukunft</h2>
+  <p>Daria, es werden immer wieder Hindernisse auf uns zukommen, doch dein Strahlen, deine Zuneigung, einfach alles Positive was du immer wieder mit mir teilst und mich Tag für Tag spüren lässt gibt mir und hoffentlich auch dir die Kraft jedes Hindernis hinter uns zu lassen, damit wir beide zusammen in die Zukunft schreiten können.<br><br>Ich liebe dich,<br>dein Nils ❤️</p>
+</section>
 
-    const songs = [
-      {file: "Musik1.mp3", color: "#b3e5fc", text: "Ein Song deiner Lieblingsband, der mich glücklich macht, weil dein Strahlen dabei so riesig ist."},
-      {file: "Musik2.mp3", color: "#111", text: "Perfekt für eine beispielslose Konzentration geeignet."},
-      {file: "Musik3.mp3", color: "#ffcc80", text: "Dieser Song erinnert mich immer wieder an die schönen Sommer, die ich mit dir verbracht habe und verbringen werde."},
-      {file: "Musik4.mp3", color: "#e57373", text: "Titel und Gefühle sind hierbei identisch – pure Liebe."},
-      {file: "Musik5.mp3", color: "#a5d6a7", text: "Eine Hommage an unsere Italienreise und die genialen Abenteuer, welche wir dort erleben durften."},
-      {file: "Musik6.mp3", color: "#f8bbd0", text: "Ich liebe dich."}
-    ];
+<section id="game">
+  <h2>🎮 Eine kleine Runde Tic Tac Toe</h2>
+  <div id="board"></div>
+  <p id="status"></p>
+  <button onclick="resetGame()">Neu starten</button>
+</section>
 
-    function playMusic(index) {
-      const song = songs[index - 1];
-      audio.src = song.file;
-      audio.play();
+<footer>
+  "Vielleicht sind wir wie Kühe und Nilpferde – völlig verschieden. Doch gerade deshalb ergänzen wir uns so wunderbar."
+</footer>
 
-      // Hintergrundfarbe & Header anpassen
-      body.style.backgroundColor = song.color;
-      header.style.backgroundColor = song.color;
+<script>
+/* ======== Musik & Animation ======== */
+const audio=document.getElementById("audio");
+const musicText=document.getElementById("musicText");
+const songs=[
+ {file:"Musik1.mp3",grad1:"#b3e5fc",grad2:"#e1f5fe",anim:"bubbles",
+  text:"Ein Song deiner Lieblingsband, der mich glücklich macht, weil dein Strahlen dabei so riesig ist."},
+ {file:"Musik2.mp3",grad1:"#111",grad2:"#333",anim:"lines",
+  text:"Perfekt für eine beispielslose Konzentration geeignet."},
+ {file:"Musik3.mp3",grad1:"#ffcc80",grad2:"#ffb74d",anim:"sun",
+  text:"Dieser Song erinnert mich immer wieder an die schönen Sommer, die ich mit dir verbracht habe und verbringen werde."},
+ {file:"Musik4.mp3",grad1:"#f48fb1",grad2:"#e57373",anim:"hearts",
+  text:"Titel und Gefühle sind hierbei identisch – pure Liebe."},
+ {file:"Musik5.mp3",grad1:"#a5d6a7",grad2:"#81c784",anim:"leaves",
+  text:"Eine Hommage an unsere Italienreise und die genialen Abenteuer, welche wir dort erleben durften."},
+ {file:"Musik6.mp3",grad1:"#f8bbd0",grad2:"#f48fb1",anim:"stars",
+  text:"Ich liebe dich."}
+];
+let currentAnim="bubbles";
+function playMusic(i){
+ const s=songs[i-1];
+ audio.src=s.file; audio.play();
+ document.documentElement.style.setProperty("--grad1",s.grad1);
+ document.documentElement.style.setProperty("--grad2",s.grad2);
+ musicText.classList.remove("show");
+ setTimeout(()=>{musicText.textContent=s.text;musicText.classList.add("show");},200);
+ currentAnim=s.anim;
+}
 
-      // Text mit sanfter Animation zeigen
-      musicText.classList.remove("show");
-      setTimeout(() => {
-        musicText.textContent = song.text;
-        musicText.classList.add("show");
-      }, 200);
+/* ======== Canvas Hintergrund ======== */
+const canvas=document.getElementById("bgCanvas");
+const ctx=canvas.getContext("2d");
+let w,h; function resize(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;}
+window.addEventListener("resize",resize); resize();
+
+let t=0;
+function draw(){
+  ctx.clearRect(0,0,w,h);
+  t+=0.01;
+  if(currentAnim==="bubbles"){
+    for(let i=0;i<30;i++){
+      const x=Math.sin(t+i)*w*0.4+w/2;
+      const y=(t*50+i*20)%h;
+      ctx.fillStyle="rgba(255,255,255,0.3)";
+      ctx.beginPath();ctx.arc(x,y,8,0,2*Math.PI);ctx.fill();
     }
-  </script>
+  } else if(currentAnim==="lines"){
+    ctx.strokeStyle="rgba(255,255,255,0.1)";
+    for(let i=0;i<30;i++){
+      ctx.beginPath();
+      ctx.moveTo((i*30+t*100)%w,0);
+      ctx.lineTo((i*30+t*100)%w,h);
+      ctx.stroke();
+    }
+  } else if(currentAnim==="sun"){
+    const grad=ctx.createRadialGradient(w/2,h/2,50,w/2,h/2,300);
+    grad.addColorStop(0,"rgba(255,255,255,0.3)");
+    grad.addColorStop(1,"transparent");
+    ctx.fillStyle=grad;
+    ctx.beginPath();ctx.arc(w/2,h/2,300+Math.sin(t*2)*10,0,2*Math.PI);ctx.fill();
+  } else if(currentAnim==="hearts"){
+    for(let i=0;i<15;i++){
+      const x=(Math.sin(t+i)*w*0.4)+w/2;
+      const y=(i*80+(t*100)%h)-80;
+      ctx.fillStyle="rgba(255,0,0,0.2)";
+      drawHeart(x,y,10+5*Math.sin(t+i));
+    }
+  } else if(currentAnim==="leaves"){
+    for(let i=0;i<25;i++){
+      const x=(i*40+(t*60)%w)-40;
+      const y=Math.sin(t+i)*40+h/2;
+      ctx.fillStyle="rgba(0,100,0,0.2)";
+      ctx.beginPath();ctx.ellipse(x,y,10,4,Math.sin(t+i),0,2*Math.PI);
+      ctx.fill();
+    }
+  } else if(currentAnim==="stars"){
+    for(let i=0;i<80;i++){
+      const x=(Math.random()*w);
+      const y=(Math.random()*h);
+      ctx.fillStyle="rgba(255,255,255,"+(Math.random()*0.8)+")";
+      ctx.fillRect(x,y,2,2);
+    }
+  }
+  requestAnimationFrame(draw);
+}
+function drawHeart(x,y,size){
+  ctx.beginPath();
+  ctx.moveTo(x,y);
+  ctx.bezierCurveTo(x-size,y-size,x-(size*2),y+size/3,x,y+size);
+  ctx.bezierCurveTo(x+(size*2),y+size/3,x+size,y-size,x,y);
+  ctx.fill();
+}
+draw();
+
+/* ======== Tic Tac Toe ======== */
+const board=document.getElementById("board");
+const statusP=document.getElementById("status");
+let cells=[],current="X",running=true;
+for(let i=0;i<9;i++){
+  const c=document.createElement("div");
+  c.className="cell";
+  c.addEventListener("click",()=>clickCell(i));
+  board.appendChild(c);cells.push(c);
+}
+function clickCell(i){
+  if(!running||cells[i].textContent) return;
+  cells[i].textContent=current;
+  if(checkWin()){statusP.textContent=`${current} hat gewonnen!`;running=false;return;}
+  if(cells.every(c=>c.textContent)){statusP.textContent="Unentschieden!";running=false;return;}
+  current=current==="X"?"O":"X";
+}
+function checkWin(){
+  const combos=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  return combos.some(a=>a.every(i=>cells[i].textContent===current));
+}
+function resetGame(){
+  cells.forEach(c=>c.textContent="");
+  current="X";running=true;statusP.textContent="";
+}
+</script>
 </body>
 </html>
