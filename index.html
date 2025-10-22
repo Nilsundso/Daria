@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -12,11 +11,13 @@
       background-color: #fffafc;
       color: #333;
       scroll-behavior: smooth;
+      transition: background-color 1s ease;
     }
     header {
       text-align: center;
       padding: 2rem;
       background-color: #fde2e4;
+      transition: background-color 1s ease;
     }
     header h1 {
       margin-bottom: 0.5rem;
@@ -74,9 +75,11 @@
       background-color: #fde2e4;
       font-style: italic;
     }
+
+    /* Musiksteuerung */
     .music-control {
       text-align: center;
-      margin: 1rem;
+      margin: 2rem auto;
     }
     .music-control button {
       background-color: #ff5e6c;
@@ -86,22 +89,46 @@
       border-radius: 30px;
       cursor: pointer;
       font-size: 1.1em;
-      transition: background-color 0.3s ease;
+      margin: 0.5rem;
+      transition: background-color 0.3s ease, transform 0.2s;
     }
     .music-control button:hover {
       background-color: #e14c5a;
+      transform: scale(1.05);
+    }
+    .music-description {
+      text-align: center;
+      font-size: 1.1rem;
+      margin-top: 1rem;
+      padding: 1rem;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .music-description.show {
+      opacity: 1;
     }
   </style>
 </head>
 <body>
 
-  <div class="music-button">
-  <button onclick="document.getElementById('audio').play()">🎵 Musik abspielen</button>
-</div>
-<audio id="audio" loop>
-  <source src="musik.mp3" type="audio/mpeg" />
-  Dein Browser unterstützt keine Musik.
-</audio>
+  <!-- Musiksteuerung -->
+  <section>
+    <h2>🎶 Unsere Musikmomente</h2>
+    <div class="music-control">
+      <button onclick="playMusic(1)">Musik 1</button>
+      <button onclick="playMusic(2)">Musik 2</button>
+      <button onclick="playMusic(3)">Musik 3</button>
+      <button onclick="playMusic(4)">Musik 4</button>
+      <button onclick="playMusic(5)">Musik 5</button>
+      <button onclick="playMusic(6)">Musik 6</button>
+    </div>
+
+    <div class="music-description" id="musicText"></div>
+
+    <audio id="audio" controls loop style="display:block; margin: 1rem auto;">
+      Dein Browser unterstützt keine Musik.
+    </audio>
+  </section>
 
   <header>
     <img src="Titelbild.jpg" alt="Titelbild" style="max-width: 60%; border-radius: 20px;" />
@@ -145,5 +172,38 @@
   <footer>
     "Vielleicht sind wir wie Kühe und Nilpferde – völlig verschieden. Doch gerade deshalb ergänzen wir uns so wunderbar."
   </footer>
+
+  <script>
+    const audio = document.getElementById("audio");
+    const musicText = document.getElementById("musicText");
+    const body = document.body;
+    const header = document.querySelector("header");
+
+    const songs = [
+      {file: "Musik1.mp3", color: "#b3e5fc", text: "Ein Song deiner Lieblingsband, der mich glücklich macht, weil dein Strahlen dabei so riesig ist."},
+      {file: "Musik2.mp3", color: "#111", text: "Perfekt für eine beispielslose Konzentration geeignet."},
+      {file: "Musik3.mp3", color: "#ffcc80", text: "Dieser Song erinnert mich immer wieder an die schönen Sommer, die ich mit dir verbracht habe und verbringen werde."},
+      {file: "Musik4.mp3", color: "#e57373", text: "Titel und Gefühle sind hierbei identisch – pure Liebe."},
+      {file: "Musik5.mp3", color: "#a5d6a7", text: "Eine Hommage an unsere Italienreise und die genialen Abenteuer, welche wir dort erleben durften."},
+      {file: "Musik6.mp3", color: "#f8bbd0", text: "Ich liebe dich."}
+    ];
+
+    function playMusic(index) {
+      const song = songs[index - 1];
+      audio.src = song.file;
+      audio.play();
+
+      // Hintergrundfarbe & Header anpassen
+      body.style.backgroundColor = song.color;
+      header.style.backgroundColor = song.color;
+
+      // Text mit sanfter Animation zeigen
+      musicText.classList.remove("show");
+      setTimeout(() => {
+        musicText.textContent = song.text;
+        musicText.classList.add("show");
+      }, 200);
+    }
+  </script>
 </body>
 </html>
