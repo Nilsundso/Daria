@@ -7,46 +7,42 @@
   <style>
     :root { --p: #fffafc; --s: #fde2e4; --a: #e75480; --glass: rgba(255, 255, 255, 0.4); }
     body {
-      margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; overflow-x: hidden;
+      margin: 0; font-family: 'Segoe UI', sans-serif; color: #333; overflow-x: hidden;
       background: linear-gradient(135deg, var(--p), var(--s)); background-size: 400% 400%;
       animation: shift 15s ease infinite; scroll-behavior: smooth;
     }
     @keyframes shift { 0%, 100% {background-position: 0% 50%} 50% {background-position: 100% 50%} }
     
-    header, section, footer { position: relative; z-index: 2; max-width: 850px; margin: 0 auto; padding: 2rem 1rem; }
+    header, section, footer { position: relative; z-index: 2; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
     .card { background: var(--glass); backdrop-filter: blur(12px); border-radius: 25px; padding: 2.5rem; margin-bottom: 2rem; box-shadow: 0 10px 40px rgba(0,0,0,0.05); text-align: center; border: 1px solid rgba(255,255,255,0.3); }
     
-    h1, h2 { color: var(--a); text-shadow: 1px 1px 2px rgba(0,0,0,0.05); }
-    img { max-width: 100%; border-radius: 20px; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-    img:hover { transform: scale(1.03); }
+    h1, h2 { color: var(--a); }
+    img { max-width: 100%; border-radius: 20px; transition: transform 0.4s ease; }
+    img:hover { transform: scale(1.02); }
     
-    /* Kalender-Spezial */
-    #daily-photo { max-height: 450px; object-fit: cover; border: 8px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-    .leap-year-text { font-size: 1.5rem; color: #ff5e6c; font-weight: bold; padding: 2rem; border: 2px dashed #ff5e6c; border-radius: 20px; }
+    #daily-photo { max-height: 450px; object-fit: cover; border: 6px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+    .leap-text { font-size: 1.4rem; color: #ff5e6c; font-weight: bold; padding: 2rem; border: 2px dashed #ff5e6c; border-radius: 20px; background: rgba(255,255,255,0.5); }
 
-    /* Musik & Buttons */
-    .music-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 1rem; }
+    .btn-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 15px 0; }
     button { 
-      background: #ff5e6c; color: #fff; border: none; padding: 12px 24px; border-radius: 25px; 
-      cursor: pointer; transition: 0.3s; font-weight: 600; box-shadow: 0 4px 10px rgba(255,94,108,0.3);
+      background: #ff5e6c; color: #fff; border: none; padding: 12px 22px; border-radius: 25px; 
+      cursor: pointer; transition: 0.3s; font-weight: 600; box-shadow: 0 4px 10px rgba(255,94,108,0.2);
     }
-    button:hover { background: var(--a); transform: translateY(-3px); box-shadow: 0 6px 15px rgba(231,84,128,0.4); }
+    button:hover { background: var(--a); transform: translateY(-2px); }
     
-    /* Games Layout */
-    .game-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 20px; }
-    .grid { display: grid; gap: 6px; justify-content: center; margin: 15px auto; }
+    .game-box { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; margin-top: 20px; }
+    .grid { display: grid; gap: 8px; justify-content: center; margin: 15px auto; }
     #ttt-board { grid-template-columns: repeat(3, 75px); }
-    #bs-board { grid-template-columns: repeat(6, 45px); }
-    .cell { width: 75px; height: 75px; background: rgba(255,255,255,0.7); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; cursor: pointer; transition: 0.2s; }
-    .cell:hover { background: #fff; transform: scale(1.05); }
-    .bs-cell { width: 45px; height: 45px; background: #e3f2fd; font-size: 1.2rem; }
-    .hit { background: #ffcdd2 !important; animation: pop 0.3s; }
+    #bs-board { grid-template-columns: repeat(6, 42px); }
+    .cell { width: 75px; height: 75px; background: rgba(255,255,255,0.7); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; cursor: pointer; }
+    .bs-cell { width: 42px; height: 42px; background: #e3f2fd; font-size: 1.1rem; }
+    .hit { background: #ffcdd2 !important; animation: pulse 0.4s; }
     .miss { background: #eceff1 !important; opacity: 0.6; }
-    @keyframes pop { 0% {transform: scale(0.8);} 100% {transform: scale(1);} }
+    @keyframes pulse { 0% {transform: scale(1);} 50% {transform: scale(1.1);} 100% {transform: scale(1);} }
 
     #bgCanvas { position: fixed; top: 0; left: 0; z-index: 0; pointer-events: none; }
-    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-    footer { font-style: italic; font-size: 1.1rem; opacity: 0.9; }
+    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+    footer { font-style: italic; opacity: 0.9; }
   </style>
 </head>
 <body>
@@ -54,180 +50,155 @@
 <canvas id="bgCanvas"></canvas>
 
 <header class="card">
-  <img src="Titelbild.jpg" alt="Daria & Nils" style="width: 280px; height: 280px; object-fit: cover; border-radius: 50%; border: 5px solid white;">
+  <img src="Titelbild.jpg" alt="Wir" style="width: 260px; height: 260px; object-fit: cover; border-radius: 50%; border: 5px solid white; box-shadow: 0 8px 25px rgba(0,0,0,0.1);">
   <h1>Für Daria – mit Liebe</h1>
-  <p>Schön, dass es dich gibt. Diese Seite gehört nur dir.</p>
+  <p>Jeder Tag mit dir ist ein besonderes Abenteuer.</p>
 </header>
 
 <section class="card">
-  <h2>📅 Dein persönlicher Kalender</h2>
-  <p id="date-label" style="font-size: 1.2rem; margin-bottom: 15px; color: #666;"></p>
-  <div id="cal-container"></div>
+  <h2>📅 Dein täglicher Moment</h2>
+  <p id="date-info" style="color: #888; font-weight: 500;"></p>
+  <div id="cal-box"></div>
 </section>
 
 <section class="card">
-  <h2>🎶 Unsere Soundtracks</h2>
-  <div class="music-grid" id="music-btns"></div>
-  <p id="musicText" style="font-style: italic; margin: 15px 0; min-height: 1.5em;"></p>
-  <audio id="audio" controls style="width: 100%; border-radius: 10px;"></audio>
+  <h2>🎶 Unsere Musik</h2>
+  <div class="btn-grid" id="music-container"></div>
+  <p id="music-desc" style="font-style: italic; height: 1.5em; margin: 15px 0;"></p>
+  <audio id="player" controls style="width: 100%; border-radius: 30px;"></audio>
 </section>
 
 <section class="card">
-  <h2>📖 Unsere Geschichte</h2>
-  <p>In einem wunderschönen Sommer haben wir uns auf den Medimeisterschaften kennengelernt. Zwischen Musik, Lachen und Sonnenstrahlen begegneten wir uns und ahnten damals nicht, wie tief unsere Verbindung einmal werden würde.</p>
+  <h2>📸 Wunderschöne Augenblicke</h2>
   <div class="gallery">
-    <img src="2.jpg" alt="Moment 1"><img src="4.jpg" alt="Moment 2"><img src="5.jpg" alt="Moment 3">
+    <img src="2.jpg" alt="Bild 2">
+    <img src="4.jpg" alt="Bild 4">
+    <img src="5.jpg" alt="Bild 5">
   </div>
 </section>
 
 <section class="card">
-  <h2>🎮 Ein bisschen Spielerei</h2>
-  <div class="game-container">
+  <h2>🎮 Gemeinsame Zeit</h2>
+  <div class="game-box">
     <div>
       <h3>Tic Tac Toe</h3>
       <div id="ttt-board" class="grid"></div>
-      <button onclick="initTTT()">Neues Spiel</button>
+      <button onclick="resetTTT()">Neu starten</button>
     </div>
     <div>
-      <h3>Herzen versenken</h3>
+      <h3>Herzen suchen</h3>
       <div id="bs-board" class="grid"></div>
-      <p id="bs-status">Finde die 3 versteckten Herzen!</p>
-      <button onclick="initBS()">Neu mischen</button>
+      <p id="bs-msg">Finde die 3 Herzen!</p>
+      <button onclick="resetBS()">Neu mischen</button>
     </div>
   </div>
 </section>
 
 <footer class="card">
-  "Vielleicht sind wir wie Kühe und Nilpferde – völlig verschieden. Doch gerade deshalb ergänzen wir uns so wunderbar." ❤️<br>
-  <small style="display:block; margin-top:10px;">In Liebe, dein Nils</small>
+  "Vielleicht sind wir wie Kühe und Nilpferde – völlig verschieden. Doch gerade deshalb ergänzen wir uns so wunderbar." ❤️
 </footer>
 
 <script>
-/* --- SETUP & KONFIGURATION --- */
-const songs = [
+/* --- SETUP --- */
+const tracks = [
   {f:"Musik1.mp3", c1:"#b3e5fc", c2:"#e1f5fe", a:"bubbles", t:"Dein Strahlen macht mich glücklich."},
-  {f:"Musik2.mp3", c1:"#2c3e50", c2:"#000000", a:"lines", t:"Perfekt für volle Konzentration."},
-  {f:"Musik3.mp3", c1:"#ffcc80", c2:"#ffb74d", a:"sun", t:"Erinnerung an unsere Sommertage."},
-  {f:"Musik4.mp3", c1:"#f48fb1", c2:"#e57373", a:"hearts", t:"Das ist pure Liebe."},
-  {f:"Musik5.mp3", c1:"#a5d6a7", c2:"#81c784", a:"leaves", t:"Unsere Abenteuer in Italien."},
+  {f:"Musik2.mp3", c1:"#2c3e50", c2:"#000000", a:"lines", t:"Konzentration & Fokus."},
+  {f:"Musik3.mp3", c1:"#ffcc80", c2:"#ffb74d", a:"sun", t:"Unsere goldenen Sommer."},
+  {f:"Musik4.mp3", c1:"#f48fb1", c2:"#e57373", a:"hearts", t:"Pure Liebe für dich."},
+  {f:"Musik5.mp3", c1:"#a5d6a7", c2:"#81c784", a:"leaves", t:"Erinnerungen an Italien."},
   {f:"Musik6.mp3", c1:"#f8bbd0", c2:"#f48fb1", a:"stars", t:"Ich liebe dich."}
 ];
 
-/* --- KALENDER-LOGIK --- */
-function setupKalender() {
+/* --- KALENDER LOGIK (PFAD ENTFERNT) --- */
+function loadKalender() {
   const now = new Date();
-  const month = now.getMonth(), day = now.getDate();
-  const container = document.getElementById('cal-container');
-  const dLabel = document.getElementById('date-label');
-  
-  dLabel.innerText = "Heute ist der " + now.toLocaleDateString('de-DE', {day:'numeric', month:'long'});
+  const m = now.getMonth(), d = now.getDate();
+  const box = document.getElementById('cal-box');
+  document.getElementById('date-info').innerText = now.toLocaleDateString('de-DE', {day:'numeric', month:'long', year:'numeric'});
 
-  if (month === 1 && day === 29) {
-    container.innerHTML = "<div class='leap-year-text'>Juhuuuu es ist Schaltjahr! Frohen 29.02. :)</div>";
+  if (m === 1 && d === 29) {
+    box.innerHTML = "<div class='leap-text'>Juhuuuu es ist Schaltjahr! Frohen 29.02. :)</div>";
   } else {
-    // Berechnung: Wievielter Tag im Jahr (ohne Schaltjahr-Sprung)
     const start = new Date(now.getFullYear(), 0, 0);
     const diff = now - start;
     const dayOfYear = Math.floor(diff / 86400000);
-    // Deine Benennung: 01.01. (Tag 1) ist Kalender (2)
-    const fileNum = dayOfYear + 1;
-    container.innerHTML = `<img src="Kalender/Kalender (${fileNum}).jpg" id="daily-photo" onerror="this.parentElement.innerHTML='<p>Hier wartet bald ein Foto auf dich! ❤️</p>'">`;
+    const fileIndex = dayOfYear + 1;
+    // HIER GEÄNDERT: Kein "Kalender/" Präfix mehr!
+    box.innerHTML = `<img src="Kalender (${fileIndex}).jpg" id="daily-photo" onerror="this.style.display='none'; this.parentElement.innerHTML='<p>Hier wartet bald ein Foto auf dich! ❤️</p>'">`;
   }
 }
 
-/* --- MUSIK & ANIMATIONS-WECHSEL --- */
-let curA = "bubbles";
-const audio = document.getElementById("audio"), mText = document.getElementById("musicText");
-songs.forEach((s, i) => {
-  const b = document.createElement("button"); b.innerText = `Moment ${i+1}`;
-  b.onclick = () => {
-    audio.src = s.f; audio.play();
-    document.documentElement.style.setProperty("--p", s.c1);
-    document.documentElement.style.setProperty("--s", s.c2);
-    mText.innerText = s.t; curA = s.a;
+/* --- CANVAS ANIMATION --- */
+const cvs = document.getElementById("bgCanvas"), ctx = cvs.getContext("2d");
+let w, h, t = 0, curEff = "bubbles";
+function resize() { w = cvs.width = window.innerWidth; h = cvs.height = window.innerHeight; }
+window.onresize = resize; resize();
+
+function animate() {
+  ctx.clearRect(0,0,w,h); t += 0.01;
+  ctx.fillStyle = "rgba(255,255,255,0.25)";
+  for(let i=0; i<25; i++) {
+    let x = (Math.sin(t+i)*w*0.4+w/2), y = (i*60+t*90)%h;
+    if(curEff === "bubbles") { ctx.beginPath(); ctx.arc(x, y, 10, 0, 7); ctx.fill(); }
+    else if(curEff === "hearts") { ctx.font = "20px serif"; ctx.fillText("❤️", x, y); }
+    else if(curEff === "stars") { ctx.fillText("✨", (Math.cos(i)*w/2+w/2), (i*100+t*50)%h); }
+    else if(curEff === "lines") { ctx.fillRect(0, (i*55+t*60)%h, w, 1); }
+  }
+  requestAnimationFrame(animate);
+}
+
+/* --- PLAYER --- */
+const player = document.getElementById("player"), mDesc = document.getElementById("music-desc");
+tracks.forEach((track, i) => {
+  const btn = document.createElement("button"); btn.innerText = `Track ${i+1}`;
+  btn.onclick = () => {
+    player.src = track.f; player.play();
+    document.documentElement.style.setProperty("--p", track.c1);
+    document.documentElement.style.setProperty("--s", track.c2);
+    mDesc.innerText = track.t; curEff = track.a;
   };
-  document.getElementById("music-btns").appendChild(b);
+  document.getElementById("music-container").appendChild(btn);
 });
 
-/* --- HINTERGRUND-EFFEKTE (CANVAS) --- */
-const cvs = document.getElementById("bgCanvas"), ctx = cvs.getContext("2d");
-let w, h, t = 0;
-function res() { w = cvs.width = window.innerWidth; h = cvs.height = window.innerHeight; }
-window.onresize = res; res();
-
-function draw() {
-  ctx.clearRect(0,0,w,h); t += 0.01;
-  ctx.fillStyle = "rgba(255,255,255,0.3)";
-  ctx.font = "20px Arial";
-  
-  for(let i=0; i<30; i++) {
-    let x = (Math.sin(t+i)*w*0.4+w/2), y = (i*60+t*80)%h;
-    if(curA === "bubbles") { ctx.beginPath(); ctx.arc(x, y, 8, 0, 7); ctx.fill(); }
-    else if(curA === "hearts") { ctx.fillText("❤️", x, y); }
-    else if(curA === "stars") { ctx.fillText("✨", (Math.cos(i)*w/2+w/2), (i*100+t*40)%h); }
-    else if(curA === "lines") { ctx.fillRect(0, (i*50+t*50)%h, w, 1); }
-  }
-  requestAnimationFrame(draw);
-}
-
-/* --- GAME 1: TIC TAC TOE --- */
-let tBoard = Array(9).fill(""), tActive = true;
-function initTTT() {
+/* --- TIC TAC TOE --- */
+let board = Array(9).fill(""), active = true;
+function resetTTT() {
   const b = document.getElementById("ttt-board"); b.innerHTML = "";
-  tBoard.fill(""); tActive = true;
+  board.fill(""); active = true;
   for(let i=0; i<9; i++) {
     const c = document.createElement("div"); c.className = "cell";
-    c.onclick = () => { 
-      if(!tBoard[i] && tActive) { 
-        tBoard[i]="X"; c.innerText="X"; 
-        if(!checkTTT()) setTimeout(aiT, 400); 
-      } 
-    };
+    c.onclick = () => { if(!board[i] && active) { board[i]="X"; c.innerText="X"; checkTTT(); if(active) setTimeout(aiMove, 400); } };
     b.appendChild(c);
   }
 }
-function aiT() {
-  let e = tBoard.map((v,i)=>v===""?i:null).filter(v=>v!==null);
-  if(e.length && tActive) { 
-    let m = e[Math.floor(Math.random()*e.length)]; 
-    tBoard[m]="O"; document.getElementById("ttt-board").children[m].innerText="O"; 
-    checkTTT(); 
-  }
+function aiMove() {
+  let empty = board.map((v,i)=>v===""?i:null).filter(v=>v!==null);
+  if(empty.length && active) { let m = empty[Math.floor(Math.random()*empty.length)]; board[m]="O"; document.getElementById("ttt-board").children[m].innerText="O"; checkTTT(); }
 }
 function checkTTT() {
-  const win = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-  for(let s of win) {
-    if(tBoard[s[0]] && tBoard[s[0]]===tBoard[s[1]] && tBoard[s[0]]===tBoard[s[2]]) {
-      tActive=false; alert(tBoard[s[0]]+" hat gewonnen! ❤️"); return true;
-    }
-  }
-  if(!tBoard.includes("")) { tActive=false; alert("Unentschieden! 🎀"); return true; }
-  return false;
+  const wins = [,,,,,,,];
+  for(let s of wins) if(board[s] && board[s]===board[s] && board[s]===board[s]) { active=false; alert(board[s]+" gewinnt! ❤️"); return; }
+  if(!board.includes("")) { active=false; alert("Unentschieden! 🎀"); }
 }
 
-/* --- GAME 2: SCHIFFE VERSENKEN (HERZEN) --- */
-let ships = [], hits = 0;
-function initBS() {
-  const b = document.getElementById("bs-board"); b.innerHTML = ""; hits = 0; ships = [];
-  document.getElementById("bs-status").innerText = "Finde die 3 Herzen!";
-  while(ships.length < 3) { let r = Math.floor(Math.random()*36); if(!ships.includes(r)) ships.push(r); }
+/* --- HERZEN SUCHEN --- */
+let targets = [], score = 0;
+function resetBS() {
+  const b = document.getElementById("bs-board"); b.innerHTML = ""; score = 0; targets = [];
+  document.getElementById("bs-msg").innerText = "Finde die 3 Herzen!";
+  while(targets.length < 3) { let r = Math.floor(Math.random()*36); if(!targets.includes(r)) targets.push(r); }
   for(let i=0; i<36; i++) {
     const c = document.createElement("div"); c.className = "cell bs-cell";
     c.onclick = () => {
-      if(c.classList.contains("hit") || c.classList.contains("miss") || hits >= 3) return;
-      if(ships.includes(i)) { 
-        c.classList.add("hit"); c.innerText="❤️"; hits++; 
-        if(hits===3) document.getElementById("bs-status").innerText = "Gewonnen! Alle Herzen gefunden! ✨";
-      } else { 
-        c.classList.add("miss"); c.innerText="~"; 
-      }
+      if(c.classList.contains("hit") || c.classList.contains("miss") || score >= 3) return;
+      if(targets.includes(i)) { c.classList.add("hit"); c.innerText="❤️"; score++; if(score===3) document.getElementById("bs-msg").innerText="Alle Herzen gefunden! ✨"; }
+      else { c.classList.add("miss"); c.innerText="~"; }
     };
     b.appendChild(c);
   }
 }
 
-// Start-Funktionen
-setupKalender(); draw(); initTTT(); initBS();
+loadKalender(); animate(); resetTTT(); resetBS();
 </script>
 </body>
 </html>
