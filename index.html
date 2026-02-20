@@ -5,302 +5,229 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Für Daria – mit Liebe</title>
   <style>
-    :root {
-      --grad1: #fffafc;
-      --grad2: #fde2e4;
-    }
+    :root { --p: #fffafc; --s: #fde2e4; --a: #e75480; --glass: rgba(255, 255, 255, 0.4); }
     body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(120deg, var(--grad1), var(--grad2));
-      background-size: 200% 200%;
-      color: #333;
-      scroll-behavior: smooth;
-      transition: background 1.5s ease;
-      animation: gradientShift 15s ease infinite;
-      overflow-x: hidden;
+      margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; overflow-x: hidden;
+      background: linear-gradient(135deg, var(--p), var(--s)); background-size: 400% 400%;
+      animation: shift 15s ease infinite; scroll-behavior: smooth;
     }
-    @keyframes gradientShift {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
-    header {
-      text-align: center;
-      padding: 2rem;
-      background-color: rgba(255,255,255,0.5);
-      backdrop-filter: blur(6px);
-      transition: background-color 1s ease;
-    }
-    header h1 {margin-bottom: .5rem;}
-    .intro {
-      text-align: center;
-      font-size: 1.2rem;
-      padding: 1rem 2rem;
-      background-color: rgba(255,240,245,0.6);
-      backdrop-filter: blur(4px);
-    }
-    section {
-      padding: 3rem 2rem;
-      max-width: 900px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
-    }
-    section h2 {
-      text-align: center;
-      margin-bottom: 1.5rem;
-      color: #e75480;
-    }
-    .love-list {
-      display:flex; flex-wrap:wrap; justify-content:center; gap:2rem;
-    }
-    .love-list div {
-      background:#ffe5ec; padding:1rem; border-radius:10px;
-      text-align:center; width:200px; transition:transform .3s;
-    }
-    .love-list div:hover {transform:scale(1.05);}
-    .gallery {
-      display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1rem;
-    }
-    .gallery img {
-      width:100%; border-radius:12px;
-      transition:transform .3s, box-shadow .3s;
-    }
-    .gallery img:hover {transform:scale(1.03); box-shadow:0 0 15px rgba(0,0,0,.2);}
-    footer {
-      text-align:center; padding:2rem;
-      background-color:rgba(253,226,228,0.7);
-      font-style:italic; backdrop-filter: blur(4px);
-    }
-    /* Musiksteuerung */
-    .music-control{text-align:center;margin:2rem auto;}
-    .music-control button{
-      background-color:#ff5e6c;color:white;padding:12px 24px;border:none;
-      border-radius:30px;cursor:pointer;font-size:1.1em;margin:.5rem;
-      transition:background-color .3s ease,transform .2s;
-    }
-    .music-control button:hover{background-color:#e14c5a;transform:scale(1.05);}
-    .music-description{text-align:center;font-size:1.1rem;margin-top:1rem;
-      padding:1rem;opacity:0;transition:opacity 1s ease;}
-    .music-description.show{opacity:1;}
+    @keyframes shift { 0%, 100% {background-position: 0% 50%} 50% {background-position: 100% 50%} }
+    
+    header, section, footer { position: relative; z-index: 2; max-width: 850px; margin: 0 auto; padding: 2rem 1rem; }
+    .card { background: var(--glass); backdrop-filter: blur(12px); border-radius: 25px; padding: 2.5rem; margin-bottom: 2rem; box-shadow: 0 10px 40px rgba(0,0,0,0.05); text-align: center; border: 1px solid rgba(255,255,255,0.3); }
+    
+    h1, h2 { color: var(--a); text-shadow: 1px 1px 2px rgba(0,0,0,0.05); }
+    img { max-width: 100%; border-radius: 20px; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    img:hover { transform: scale(1.03); }
+    
+    /* Kalender-Spezial */
+    #daily-photo { max-height: 450px; object-fit: cover; border: 8px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+    .leap-year-text { font-size: 1.5rem; color: #ff5e6c; font-weight: bold; padding: 2rem; border: 2px dashed #ff5e6c; border-radius: 20px; }
 
-    /* Canvas für animierten Hintergrund */
-    #bgCanvas{
-      position:fixed;top:0;left:0;width:100%;height:100%;
-      z-index:0;pointer-events:none;
+    /* Musik & Buttons */
+    .music-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 1rem; }
+    button { 
+      background: #ff5e6c; color: #fff; border: none; padding: 12px 24px; border-radius: 25px; 
+      cursor: pointer; transition: 0.3s; font-weight: 600; box-shadow: 0 4px 10px rgba(255,94,108,0.3);
     }
+    button:hover { background: var(--a); transform: translateY(-3px); box-shadow: 0 6px 15px rgba(231,84,128,0.4); }
+    
+    /* Games Layout */
+    .game-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 20px; }
+    .grid { display: grid; gap: 6px; justify-content: center; margin: 15px auto; }
+    #ttt-board { grid-template-columns: repeat(3, 75px); }
+    #bs-board { grid-template-columns: repeat(6, 45px); }
+    .cell { width: 75px; height: 75px; background: rgba(255,255,255,0.7); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; cursor: pointer; transition: 0.2s; }
+    .cell:hover { background: #fff; transform: scale(1.05); }
+    .bs-cell { width: 45px; height: 45px; background: #e3f2fd; font-size: 1.2rem; }
+    .hit { background: #ffcdd2 !important; animation: pop 0.3s; }
+    .miss { background: #eceff1 !important; opacity: 0.6; }
+    @keyframes pop { 0% {transform: scale(0.8);} 100% {transform: scale(1);} }
 
-    /* Tic Tac Toe */
-    #game {
-      text-align:center;
-    }
-    #board {
-      display:grid;
-      grid-template-columns:repeat(3,100px);
-      grid-gap:5px;
-      justify-content:center;
-      margin:20px auto;
-    }
-    .cell {
-      width:100px; height:100px;
-      background:rgba(255,255,255,0.7);
-      font-size:2.5rem; display:flex;
-      align-items:center; justify-content:center;
-      cursor:pointer; border-radius:12px;
-      transition:background .3s;
-    }
-    .cell:hover{background:rgba(255,255,255,0.9);}
+    #bgCanvas { position: fixed; top: 0; left: 0; z-index: 0; pointer-events: none; }
+    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+    footer { font-style: italic; font-size: 1.1rem; opacity: 0.9; }
   </style>
 </head>
 <body>
+
 <canvas id="bgCanvas"></canvas>
 
-<section>
-  <h2>🎶 Unsere Musikmomente</h2>
-  <div class="music-control">
-    <button onclick="playMusic(1)">Musik 1</button>
-    <button onclick="playMusic(2)">Musik 2</button>
-    <button onclick="playMusic(3)">Musik 3</button>
-    <button onclick="playMusic(4)">Musik 4</button>
-    <button onclick="playMusic(5)">Musik 5</button>
-    <button onclick="playMusic(6)">Musik 6</button>
-  </div>
-  <div class="music-description" id="musicText"></div>
-  <audio id="audio" controls loop style="display:block;margin:1rem auto;">
-    Dein Browser unterstützt keine Musik.
-  </audio>
-</section>
-
-<header>
-  <img src="Titelbild.jpg" alt="Titelbild" style="max-width:60%;border-radius:20px;" />
+<header class="card">
+  <img src="Titelbild.jpg" alt="Daria & Nils" style="width: 280px; height: 280px; object-fit: cover; border-radius: 50%; border: 5px solid white;">
   <h1>Für Daria – mit Liebe</h1>
+  <p>Schön, dass es dich gibt. Diese Seite gehört nur dir.</p>
 </header>
 
-<div class="intro">
-  Diese Seite ist nur für dich Daria – als Erinnerung, Liebeserklärung und Dankeschön dafür, dass du so viel Liebe für mich bereithälst.
-</div>
-
-<section>
-  <h2>Unser erstes Kapitel</h2>
-  <p>In einem wunderschönen Sommer haben wir uns auf den Medimeisterschaften kennengelernt. Zwischen Musik, Lachen und Sonnenstrahlen begegneten wir uns und ahnten damals nicht, wie tief unsere Verbindung einmal werden würde. Mit der Zeit lernten wir uns immer besser kennen und aus einer Begegnung wurde Zuneigung – aus Zuneigung Liebe.</p>
+<section class="card">
+  <h2>📅 Dein persönlicher Kalender</h2>
+  <p id="date-label" style="font-size: 1.2rem; margin-bottom: 15px; color: #666;"></p>
+  <div id="cal-container"></div>
 </section>
 
-<section>
-  <h2>Was ich an dir liebe</h2>
-  <div class="love-list">
-    <div>❤️ Deine Fürsorglichkeit</div>
-    <div>🌟 Deine Aufmerksamkeit</div>
-    <div>🤍 Deine Ehrlichkeit</div>
-    <div>🔒 Deine Treue</div>
-    <div>💖 Die Liebe, die du mir jeden Tag schenkst</div>
-  </div>
+<section class="card">
+  <h2>🎶 Unsere Soundtracks</h2>
+  <div class="music-grid" id="music-btns"></div>
+  <p id="musicText" style="font-style: italic; margin: 15px 0; min-height: 1.5em;"></p>
+  <audio id="audio" controls style="width: 100%; border-radius: 10px;"></audio>
 </section>
 
-<section>
-  <h2>Wunderschöne Momente mit dir!</h2>
+<section class="card">
+  <h2>📖 Unsere Geschichte</h2>
+  <p>In einem wunderschönen Sommer haben wir uns auf den Medimeisterschaften kennengelernt. Zwischen Musik, Lachen und Sonnenstrahlen begegneten wir uns und ahnten damals nicht, wie tief unsere Verbindung einmal werden würde.</p>
   <div class="gallery">
-    <img src="2.jpg" alt="Moment 2" />
-    <img src="4.jpg" alt="Moment 4" />
-    <img src="5.jpg" alt="Moment 5" />
+    <img src="2.jpg" alt="Moment 1"><img src="4.jpg" alt="Moment 2"><img src="5.jpg" alt="Moment 3">
   </div>
 </section>
 
-<section>
-  <h2>Für die Zukunft</h2>
-  <p>Daria, es werden immer wieder Hindernisse auf uns zukommen, doch dein Strahlen, deine Zuneigung, einfach alles Positive was du immer wieder mit mir teilst und mich Tag für Tag spüren lässt gibt mir und hoffentlich auch dir die Kraft jedes Hindernis hinter uns zu lassen, damit wir beide zusammen in die Zukunft schreiten können.<br><br>Ich liebe dich,<br>dein Nils ❤️</p>
+<section class="card">
+  <h2>🎮 Ein bisschen Spielerei</h2>
+  <div class="game-container">
+    <div>
+      <h3>Tic Tac Toe</h3>
+      <div id="ttt-board" class="grid"></div>
+      <button onclick="initTTT()">Neues Spiel</button>
+    </div>
+    <div>
+      <h3>Herzen versenken</h3>
+      <div id="bs-board" class="grid"></div>
+      <p id="bs-status">Finde die 3 versteckten Herzen!</p>
+      <button onclick="initBS()">Neu mischen</button>
+    </div>
+  </div>
 </section>
 
-<section id="game">
-  <h2>🎮 Eine kleine Runde Tic Tac Toe</h2>
-  <div id="board"></div>
-  <p id="status"></p>
-  <button onclick="resetGame()">Neu starten</button>
-</section>
-
-<footer>
-  "Vielleicht sind wir wie Kühe und Nilpferde – völlig verschieden. Doch gerade deshalb ergänzen wir uns so wunderbar."
+<footer class="card">
+  "Vielleicht sind wir wie Kühe und Nilpferde – völlig verschieden. Doch gerade deshalb ergänzen wir uns so wunderbar." ❤️<br>
+  <small style="display:block; margin-top:10px;">In Liebe, dein Nils</small>
 </footer>
 
 <script>
-/* ======== Musik & Animation ======== */
-const audio=document.getElementById("audio");
-const musicText=document.getElementById("musicText");
-const songs=[
- {file:"Musik1.mp3",grad1:"#b3e5fc",grad2:"#e1f5fe",anim:"bubbles",
-  text:"Ein Song deiner Lieblingsband, der mich glücklich macht, weil dein Strahlen dabei so riesig ist."},
- {file:"Musik2.mp3",grad1:"#111",grad2:"#333",anim:"lines",
-  text:"Perfekt für eine beispielslose Konzentration geeignet."},
- {file:"Musik3.mp3",grad1:"#ffcc80",grad2:"#ffb74d",anim:"sun",
-  text:"Dieser Song erinnert mich immer wieder an die schönen Sommer, die ich mit dir verbracht habe und verbringen werde."},
- {file:"Musik4.mp3",grad1:"#f48fb1",grad2:"#e57373",anim:"hearts",
-  text:"Titel und Gefühle sind hierbei identisch – pure Liebe."},
- {file:"Musik5.mp3",grad1:"#a5d6a7",grad2:"#81c784",anim:"leaves",
-  text:"Eine Hommage an unsere Italienreise und die genialen Abenteuer, welche wir dort erleben durften."},
- {file:"Musik6.mp3",grad1:"#f8bbd0",grad2:"#f48fb1",anim:"stars",
-  text:"Ich liebe dich."}
+/* --- SETUP & KONFIGURATION --- */
+const songs = [
+  {f:"Musik1.mp3", c1:"#b3e5fc", c2:"#e1f5fe", a:"bubbles", t:"Dein Strahlen macht mich glücklich."},
+  {f:"Musik2.mp3", c1:"#2c3e50", c2:"#000000", a:"lines", t:"Perfekt für volle Konzentration."},
+  {f:"Musik3.mp3", c1:"#ffcc80", c2:"#ffb74d", a:"sun", t:"Erinnerung an unsere Sommertage."},
+  {f:"Musik4.mp3", c1:"#f48fb1", c2:"#e57373", a:"hearts", t:"Das ist pure Liebe."},
+  {f:"Musik5.mp3", c1:"#a5d6a7", c2:"#81c784", a:"leaves", t:"Unsere Abenteuer in Italien."},
+  {f:"Musik6.mp3", c1:"#f8bbd0", c2:"#f48fb1", a:"stars", t:"Ich liebe dich."}
 ];
-let currentAnim="bubbles";
-function playMusic(i){
- const s=songs[i-1];
- audio.src=s.file; audio.play();
- document.documentElement.style.setProperty("--grad1",s.grad1);
- document.documentElement.style.setProperty("--grad2",s.grad2);
- musicText.classList.remove("show");
- setTimeout(()=>{musicText.textContent=s.text;musicText.classList.add("show");},200);
- currentAnim=s.anim;
+
+/* --- KALENDER-LOGIK --- */
+function setupKalender() {
+  const now = new Date();
+  const month = now.getMonth(), day = now.getDate();
+  const container = document.getElementById('cal-container');
+  const dLabel = document.getElementById('date-label');
+  
+  dLabel.innerText = "Heute ist der " + now.toLocaleDateString('de-DE', {day:'numeric', month:'long'});
+
+  if (month === 1 && day === 29) {
+    container.innerHTML = "<div class='leap-year-text'>Juhuuuu es ist Schaltjahr! Frohen 29.02. :)</div>";
+  } else {
+    // Berechnung: Wievielter Tag im Jahr (ohne Schaltjahr-Sprung)
+    const start = new Date(now.getFullYear(), 0, 0);
+    const diff = now - start;
+    const dayOfYear = Math.floor(diff / 86400000);
+    // Deine Benennung: 01.01. (Tag 1) ist Kalender (2)
+    const fileNum = dayOfYear + 1;
+    container.innerHTML = `<img src="Kalender/Kalender (${fileNum}).jpg" id="daily-photo" onerror="this.parentElement.innerHTML='<p>Hier wartet bald ein Foto auf dich! ❤️</p>'">`;
+  }
 }
 
-/* ======== Canvas Hintergrund ======== */
-const canvas=document.getElementById("bgCanvas");
-const ctx=canvas.getContext("2d");
-let w,h; function resize(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;}
-window.addEventListener("resize",resize); resize();
+/* --- MUSIK & ANIMATIONS-WECHSEL --- */
+let curA = "bubbles";
+const audio = document.getElementById("audio"), mText = document.getElementById("musicText");
+songs.forEach((s, i) => {
+  const b = document.createElement("button"); b.innerText = `Moment ${i+1}`;
+  b.onclick = () => {
+    audio.src = s.f; audio.play();
+    document.documentElement.style.setProperty("--p", s.c1);
+    document.documentElement.style.setProperty("--s", s.c2);
+    mText.innerText = s.t; curA = s.a;
+  };
+  document.getElementById("music-btns").appendChild(b);
+});
 
-let t=0;
-function draw(){
-  ctx.clearRect(0,0,w,h);
-  t+=0.01;
-  if(currentAnim==="bubbles"){
-    for(let i=0;i<30;i++){
-      const x=Math.sin(t+i)*w*0.4+w/2;
-      const y=(t*50+i*20)%h;
-      ctx.fillStyle="rgba(255,255,255,0.3)";
-      ctx.beginPath();ctx.arc(x,y,8,0,2*Math.PI);ctx.fill();
-    }
-  } else if(currentAnim==="lines"){
-    ctx.strokeStyle="rgba(255,255,255,0.1)";
-    for(let i=0;i<30;i++){
-      ctx.beginPath();
-      ctx.moveTo((i*30+t*100)%w,0);
-      ctx.lineTo((i*30+t*100)%w,h);
-      ctx.stroke();
-    }
-  } else if(currentAnim==="sun"){
-    const grad=ctx.createRadialGradient(w/2,h/2,50,w/2,h/2,300);
-    grad.addColorStop(0,"rgba(255,255,255,0.3)");
-    grad.addColorStop(1,"transparent");
-    ctx.fillStyle=grad;
-    ctx.beginPath();ctx.arc(w/2,h/2,300+Math.sin(t*2)*10,0,2*Math.PI);ctx.fill();
-  } else if(currentAnim==="hearts"){
-    for(let i=0;i<15;i++){
-      const x=(Math.sin(t+i)*w*0.4)+w/2;
-      const y=(i*80+(t*100)%h)-80;
-      ctx.fillStyle="rgba(255,0,0,0.2)";
-      drawHeart(x,y,10+5*Math.sin(t+i));
-    }
-  } else if(currentAnim==="leaves"){
-    for(let i=0;i<25;i++){
-      const x=(i*40+(t*60)%w)-40;
-      const y=Math.sin(t+i)*40+h/2;
-      ctx.fillStyle="rgba(0,100,0,0.2)";
-      ctx.beginPath();ctx.ellipse(x,y,10,4,Math.sin(t+i),0,2*Math.PI);
-      ctx.fill();
-    }
-  } else if(currentAnim==="stars"){
-    for(let i=0;i<80;i++){
-      const x=(Math.random()*w);
-      const y=(Math.random()*h);
-      ctx.fillStyle="rgba(255,255,255,"+(Math.random()*0.8)+")";
-      ctx.fillRect(x,y,2,2);
-    }
+/* --- HINTERGRUND-EFFEKTE (CANVAS) --- */
+const cvs = document.getElementById("bgCanvas"), ctx = cvs.getContext("2d");
+let w, h, t = 0;
+function res() { w = cvs.width = window.innerWidth; h = cvs.height = window.innerHeight; }
+window.onresize = res; res();
+
+function draw() {
+  ctx.clearRect(0,0,w,h); t += 0.01;
+  ctx.fillStyle = "rgba(255,255,255,0.3)";
+  ctx.font = "20px Arial";
+  
+  for(let i=0; i<30; i++) {
+    let x = (Math.sin(t+i)*w*0.4+w/2), y = (i*60+t*80)%h;
+    if(curA === "bubbles") { ctx.beginPath(); ctx.arc(x, y, 8, 0, 7); ctx.fill(); }
+    else if(curA === "hearts") { ctx.fillText("❤️", x, y); }
+    else if(curA === "stars") { ctx.fillText("✨", (Math.cos(i)*w/2+w/2), (i*100+t*40)%h); }
+    else if(curA === "lines") { ctx.fillRect(0, (i*50+t*50)%h, w, 1); }
   }
   requestAnimationFrame(draw);
 }
-function drawHeart(x,y,size){
-  ctx.beginPath();
-  ctx.moveTo(x,y);
-  ctx.bezierCurveTo(x-size,y-size,x-(size*2),y+size/3,x,y+size);
-  ctx.bezierCurveTo(x+(size*2),y+size/3,x+size,y-size,x,y);
-  ctx.fill();
-}
-draw();
 
-/* ======== Tic Tac Toe ======== */
-const board=document.getElementById("board");
-const statusP=document.getElementById("status");
-let cells=[],current="X",running=true;
-for(let i=0;i<9;i++){
-  const c=document.createElement("div");
-  c.className="cell";
-  c.addEventListener("click",()=>clickCell(i));
-  board.appendChild(c);cells.push(c);
+/* --- GAME 1: TIC TAC TOE --- */
+let tBoard = Array(9).fill(""), tActive = true;
+function initTTT() {
+  const b = document.getElementById("ttt-board"); b.innerHTML = "";
+  tBoard.fill(""); tActive = true;
+  for(let i=0; i<9; i++) {
+    const c = document.createElement("div"); c.className = "cell";
+    c.onclick = () => { 
+      if(!tBoard[i] && tActive) { 
+        tBoard[i]="X"; c.innerText="X"; 
+        if(!checkTTT()) setTimeout(aiT, 400); 
+      } 
+    };
+    b.appendChild(c);
+  }
 }
-function clickCell(i){
-  if(!running||cells[i].textContent) return;
-  cells[i].textContent=current;
-  if(checkWin()){statusP.textContent=`${current} hat gewonnen!`;running=false;return;}
-  if(cells.every(c=>c.textContent)){statusP.textContent="Unentschieden!";running=false;return;}
-  current=current==="X"?"O":"X";
+function aiT() {
+  let e = tBoard.map((v,i)=>v===""?i:null).filter(v=>v!==null);
+  if(e.length && tActive) { 
+    let m = e[Math.floor(Math.random()*e.length)]; 
+    tBoard[m]="O"; document.getElementById("ttt-board").children[m].innerText="O"; 
+    checkTTT(); 
+  }
 }
-function checkWin(){
-  const combos=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-  return combos.some(a=>a.every(i=>cells[i].textContent===current));
+function checkTTT() {
+  const win = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  for(let s of win) {
+    if(tBoard[s[0]] && tBoard[s[0]]===tBoard[s[1]] && tBoard[s[0]]===tBoard[s[2]]) {
+      tActive=false; alert(tBoard[s[0]]+" hat gewonnen! ❤️"); return true;
+    }
+  }
+  if(!tBoard.includes("")) { tActive=false; alert("Unentschieden! 🎀"); return true; }
+  return false;
 }
-function resetGame(){
-  cells.forEach(c=>c.textContent="");
-  current="X";running=true;statusP.textContent="";
+
+/* --- GAME 2: SCHIFFE VERSENKEN (HERZEN) --- */
+let ships = [], hits = 0;
+function initBS() {
+  const b = document.getElementById("bs-board"); b.innerHTML = ""; hits = 0; ships = [];
+  document.getElementById("bs-status").innerText = "Finde die 3 Herzen!";
+  while(ships.length < 3) { let r = Math.floor(Math.random()*36); if(!ships.includes(r)) ships.push(r); }
+  for(let i=0; i<36; i++) {
+    const c = document.createElement("div"); c.className = "cell bs-cell";
+    c.onclick = () => {
+      if(c.classList.contains("hit") || c.classList.contains("miss") || hits >= 3) return;
+      if(ships.includes(i)) { 
+        c.classList.add("hit"); c.innerText="❤️"; hits++; 
+        if(hits===3) document.getElementById("bs-status").innerText = "Gewonnen! Alle Herzen gefunden! ✨";
+      } else { 
+        c.classList.add("miss"); c.innerText="~"; 
+      }
+    };
+    b.appendChild(c);
+  }
 }
+
+// Start-Funktionen
+setupKalender(); draw(); initTTT(); initBS();
 </script>
 </body>
 </html>
