@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f7dbe7" />
+  <title>Für Daria – mit Liebe</title>
+  <style>
+    :root{--p:#fff8fc;--s:#f9dce8;--a:#d94f83;--ink:#45333d;--glass:rgba(255,255,255,.72);--line:rgba(217,79,131,.18);--shadow:0 18px 55px rgba(117,53,85,.12)}
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:ui-rounded,"Segoe UI",system-ui,sans-serif;color:var(--ink);overflow-x:hidden;background:linear-gradient(135deg,var(--p),var(--s));background-size:350% 350%;animation:shift 18s ease infinite}
+    @keyframes shift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+    #bgCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+    .site-shell{position:relative;z-index:1;width:min(1080px,calc(100% - 28px));margin:auto;padding:22px 0 40px}
+    .hero,.card{background:var(--glass);border:1px solid rgba(255,255,255,.8);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:28px;box-shadow:var(--shadow)}
+    .hero{padding:clamp(24px,5vw,48px) 22px;text-align:center;overflow:hidden;position:relative}
+    .hero:before{content:"✦  ♥  ✦";position:absolute;top:15px;right:20px;color:#e7a2bf;letter-spacing:9px;opacity:.75}
+    .hero img{width:clamp(150px,25vw,220px);height:clamp(150px,25vw,220px);object-fit:cover;border-radius:50%;border:6px solid white;box-shadow:0 10px 30px #c86b9550}
+    h1{font-size:clamp(2rem,6vw,3.5rem);line-height:1.08;margin:18px 0 10px;color:var(--a)}h2{color:var(--a);font-size:clamp(1.45rem,3vw,2rem);margin:0 0 14px}h3{margin:10px 0;color:#9e426c}p{line-height:1.65}.subtitle{font-size:1.1rem;margin:0 auto;max-width:560px}
+    .nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:18px 0 24px}.nav a{color:#8d3c64;text-decoration:none;padding:10px 15px;border-radius:999px;background:#ffffffb8;border:1px solid var(--line);font-weight:700;font-size:.95rem;transition:.2s}.nav a:hover,.nav a:focus{background:#fff;transform:translateY(-2px);outline:2px solid #eaa1bf}
+    .card{padding:clamp(20px,4vw,34px);margin:0 0 22px;text-align:center;scroll-margin-top:18px}.muted{color:#846c79}.small{font-size:.9rem}.pill{display:inline-flex;align-items:center;gap:7px;border-radius:999px;background:#fff8fc;padding:7px 12px;font-size:.88rem;color:#9a4b70;border:1px solid var(--line)}
+    button,.file-label{font:inherit;background:linear-gradient(135deg,#ed729d,#d94f83);color:white;border:0;padding:11px 17px;border-radius:999px;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 6px 16px #d94f8328;margin:5px;font-weight:700}button:hover,.file-label:hover{transform:translateY(-2px);box-shadow:0 10px 22px #d94f8338}button:focus-visible,.file-label:focus-within{outline:3px solid #8d3c64;outline-offset:3px}.secondary{background:#fff;color:#a54470;border:1px solid var(--line);box-shadow:none}.button-row{display:flex;justify-content:center;flex-wrap:wrap;gap:5px}
+    #daily-photo{display:block;max-height:560px;width:auto;max-width:100%;object-fit:contain;margin:16px auto;border:6px solid white;border-radius:22px;box-shadow:0 12px 34px #8e456326}.special-day{max-width:760px;margin:18px auto;padding:clamp(22px,4vw,38px);background:linear-gradient(135deg,#fffafd,#ffe9f1);border:1px solid #f3c2d5;border-radius:24px;text-align:left;box-shadow:inset 0 0 35px #f8c8d83d}.special-day h3{text-align:center;font-size:1.6rem}.special-day p{text-align:left}.date-label{font-weight:800;font-size:1.1rem;color:#9e426c}.zip-status{margin:12px auto;max-width:650px;padding:10px 14px;border-radius:14px;background:#fff9fc;border:1px solid var(--line);font-size:.92rem}.zip-tools{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}.file-label{display:inline-flex;align-items:center}.file-label input{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}
+    .music-controls{display:flex;flex-wrap:wrap;justify-content:center;gap:4px}.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}.gallery img{width:100%;height:210px;object-fit:cover;border-radius:18px;border:4px solid white;box-shadow:0 7px 20px #7b456018;transition:transform .25s}.gallery img:hover{transform:scale(1.035) rotate(-1deg)}
+    .game-layout{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px}.game-panel{padding:18px 12px;border-radius:22px;background:#fff8fcbd;border:1px solid var(--line)}.grid{display:grid;gap:5px;justify-content:center;margin:16px auto}.ttt-board{grid-template-columns:repeat(3,clamp(58px,15vw,76px))}.cell{width:clamp(58px,15vw,76px);height:clamp(58px,15vw,76px);display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid #f3cada;border-radius:14px;font-size:1.65rem;font-weight:800;cursor:pointer;color:#a54470}.bs-board{grid-template-columns:repeat(6,clamp(32px,8vw,43px))}.bs-cell{width:clamp(32px,8vw,43px);height:clamp(32px,8vw,43px);font-size:1rem;background:#dff2fb;color:#477a91;border-radius:9px}.hit{background:#e75480!important;color:white}.miss{background:#d9dfe5!important;color:#6d7882}.status{min-height:1.5em;font-weight:700;color:#92506d}
+    .memory-board{display:grid;grid-template-columns:repeat(4,minmax(48px,72px));gap:8px;justify-content:center;margin:16px auto}.memory-card{height:68px;border-radius:13px;background:#f7c8da;color:#9b426a;font-size:1.55rem;padding:0;box-shadow:none}.memory-card.revealed{background:white;border:1px solid #edb4ca;box-shadow:none}.memory-card.matched{background:#e2f4e7;color:#38764b;box-shadow:none}
+    .creature-stage{position:relative;min-height:300px;border-radius:24px;overflow:hidden;background:radial-gradient(circle at 20% 20%,#fff 0 3%,transparent 4%),linear-gradient(180deg,#dff5ff,#e7f8e8 70%,#c7e8c4);display:flex;align-items:center;justify-content:center;gap:clamp(8px,5vw,40px);padding:22px}.creature{font-size:clamp(4rem,13vw,8rem);filter:drop-shadow(0 8px 5px #3453);cursor:pointer;user-select:none;animation:bob 2.6s ease-in-out infinite;transition:transform .3s}.creature:nth-child(2){animation-delay:.5s}.creature:hover{transform:scale(1.18) rotate(-8deg)}@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -13px}}.effect-line{min-height:2em;font-weight:700;color:#8d3c64}.floating-emoji{position:absolute;pointer-events:none;animation:floatUp 1.7s ease-out forwards;font-size:2rem}@keyframes floatUp{from{opacity:1;transform:translateY(0) scale(.7)}to{opacity:0;transform:translateY(-150px) rotate(20deg) scale(1.4)}}
+    .hidden{display:none!important}footer{text-align:center;color:#8b6a7a;padding:12px 10px 24px}.footer-quote{font-size:1.05rem;font-weight:650}.section-kicker{color:#a15a7a;text-transform:uppercase;letter-spacing:.12em;font-size:.75rem;font-weight:800}
+    @media(max-width:560px){.site-shell{width:min(100% - 18px,1080px);padding-top:10px}.card{border-radius:22px}.hero{border-radius:24px}.nav a{font-size:.86rem;padding:9px 11px}.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.gallery img{height:160px}.creature-stage{min-height:230px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition:none!important}}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+</head>
+<body>
+<canvas id="bgCanvas" aria-hidden="true"></canvas>
+<div class="site-shell">
+  <header class="hero" id="start">
+    <img src="Titelbild.jpg" alt="Unser Titelbild" onerror="this.style.display='none'">
+    <p class="section-kicker">Ein kleiner Ort voller Erinnerungen</p>
+    <h1>Für Daria – mit Liebe</h1>
+    <p class="subtitle">Jeder Tag mit dir ist ein Geschenk. ❤️</p>
+  </header>
+  <nav class="nav" aria-label="Seitennavigation">
+    <a href="#kalender">📅 Tageskalender</a><a href="#musik">🎶 Unsere Musik</a><a href="#galerie">📸 Galerie</a><a href="#spiele">🎮 Spiele</a><a href="tierwelt.html">🐄 Extra-Seite: Tierwelt</a>
+  </nav>
+
+  <main>
+    <section class="card" id="kalender">
+      <p class="section-kicker">Ein neuer kleiner Moment</p><h2>📅 Dein Moment heute</h2>
+      <div id="cal-container" aria-live="polite"><p>Der Kalender wird vorbereitet …</p></div>
+      <p id="date-label" class="date-label"></p>
+      <p class="muted small">Jeden Tag wartet ein Bild auf dich – am 29. Februar in Schaltjahren eine besondere Nachricht.</p>
+      <div class="zip-tools">
+        <label class="file-label">📦 ZIP-Dateien auswählen<input id="zip-input" type="file" accept=".zip,application/zip" multiple></label>
+        <button class="secondary" id="load-default-zip" type="button">ZIP erneut laden</button>
+      </div>
+      <div id="zip-status" class="zip-status" role="status">Suche nach Kalender_Bilder_1.zip bis Kalender_Bilder_5.zip neben dieser HTML-Datei. Falls sie nicht automatisch geladen werden, wähle alle fünf ZIP-Dateien oben aus.</div>
+    </section>
+
+    <section class="card" id="musik">
+      <p class="section-kicker">Unser Soundtrack</p><h2>🎶 Unsere Musik</h2>
+      <div id="music-btns" class="music-controls"></div>
+      <p id="musicText" style="min-height:3em;padding:4px 10px">Wähle einen Track aus und lass die Stimmung wechseln. 💗</p>
+      <audio id="audio" controls preload="none" style="width:100%"></audio>
+      <p class="muted small">Die Musikdateien (Musik1.mp3 bis Musik6.mp3) bitte im selben Ordner wie diese HTML-Datei lassen.</p>
+    </section>
+
+    <section class="card" id="galerie">
+      <p class="section-kicker">Unsere Erinnerungen</p><h2>📸 Galerie der Liebe</h2>
+      <div class="gallery">
+        <img src="2.jpg" alt="Erinnerung 1" loading="lazy" onerror="this.style.display='none'"><img src="4.jpg" alt="Erinnerung 2" loading="lazy" onerror="this.style.display='none'"><img src="5.jpg" alt="Erinnerung 3" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <p class="muted small">Deine bisherige Galerie bleibt erhalten. Die Kalender-ZIP wird unabhängig davon verwendet.</p>
+    </section>
+
+    <section class="card" id="spiele">
+      <p class="section-kicker">Zusammen spielen</p><h2>🎮 Spielzeit</h2>
+      <div class="game-layout">
+        <div class="game-panel"><h3>⭕ Tic Tac Toe</h3><p class="muted small">Du bist X, der Computer spielt O.</p><div id="ttt-board" class="grid ttt-board" aria-label="Tic Tac Toe Spielfeld"></div><p id="ttt-status" class="status" aria-live="polite">Du fängst an!</p><button class="secondary" onclick="initTTT()">Neu starten</button></div>
+        <div class="game-panel"><h3>🚢 Finde die Herzen</h3><p class="muted small">Finde alle drei versteckten Herzen.</p><div id="bs-board" class="grid bs-board" aria-label="Spielfeld Finde die Herzen"></div><p id="bs-status" class="status" aria-live="polite">Finde die 3 Herzen!</p><button class="secondary" onclick="initBS()">Neu mischen</button></div>
+        <div class="game-panel"><h3>🧠 Herzchen-Memory</h3><p class="muted small">Finde alle passenden Paare.</p><div id="memory-board" class="memory-board" aria-label="Memory Spielfeld"></div><p id="memory-status" class="status" aria-live="polite">Finde die 6 Paare!</p><button class="secondary" onclick="initMemory()">Neu mischen</button></div>
+        <div class="game-panel"><h3>💖 Herz-Reaktion</h3><p class="muted small">Tippe so oft du kannst in 10 Sekunden.</p><p style="font-size:2.2rem;margin:10px">💗 <strong id="click-score">0</strong></p><p id="click-status" class="status">Bereit?</p><button id="click-start" type="button">Los geht's!</button><button id="heart-click" class="secondary" type="button" disabled>Herz antippen 💗</button></div>
+      </div>
+    </section>
+
+
+  </main>
+  <footer><p class="footer-quote">„Vielleicht sind wir wie Kühe und Nilpferde – völlig verschieden. Doch gerade deshalb ergänzen wir uns so wunderbar.“ ❤️</p><p class="small">Mit ganz viel Liebe gemacht.</p></footer>
+</div>
+
+<script>
+/* Kalenderbild-Zuordnung: fortlaufende Tagesnummer 1–365, in 100er-Dateigruppen. */
+const SPECIAL_FEB_29 = `
+  <article class="special-day">
+    <h3>❤️ Der 29. Februar – Ein Tag nur für dich ❤️</h3>
+    <p>Manche Tage sind besonders schön. Andere bleiben für immer in Erinnerung. Und dann gibt es diesen einen Tag, den uns der Kalender nur alle vier Jahre schenkt.</p>
+    <p>Vielleicht ist genau das eine kleine Erinnerung daran, dass die seltensten Dinge im Leben oft die wertvollsten sind. Man kann nicht jeden Augenblick festhalten und nicht jeden Tag wiederholen. Aber es gibt Menschen, die selbst ganz gewöhnliche Momente zu etwas Besonderem machen.</p>
+    <p>Und heute, an diesem seltenen Tag, möchte ich dich daran erinnern, wie schön es ist, dass es dich gibt. ❤️</p>
+    <p>Wenn ich dir etwas wünschen könnte, dann wären es unzählige Momente, die dein Herz zum Lächeln bringen, Menschen, die dich zum Lachen bringen, und Augenblicke, die du am liebsten für immer festhalten würdest.</p>
+    <p>Denn auch wenn der 29. Februar nur alle vier Jahre im Kalender steht, gibt es Dinge, die keinen besonderen Tag brauchen, um wertvoll zu sein.</p>
+    <p style="text-align:center;font-weight:800;color:#c7477c">Manche Menschen sind eben etwas ganz Besonderes – und du gehörst dazu. ❤️✨</p>
+  </article>`;
+let zipImages = new Map();
+const zipStatus = document.getElementById('zip-status');
+function isLeapYear(year){return year%4===0&&(year%100!==0||year%400===0)}
+function dayOfYear(date){const start=Date.UTC(date.getFullYear(),0,0);const current=Date.UTC(date.getFullYear(),date.getMonth(),date.getDate());return Math.floor((current-start)/86400000)}
+function expectedImageName(index){const group=Math.floor((index-1)/100)+1;const local=index-(group-1)*100;return `${group}_Kalender_${local}`}
+function normalizeImageName(name){return name.split('/').pop().replace(/\.(jpe?g|png|webp|gif|avif)$/i,'').toLowerCase()}
+function setZipStatus(message){zipStatus.textContent=message}
+function findImage(index){const base=expectedImageName(index).toLowerCase();for(const [name,url] of zipImages){if(normalizeImageName(name)===base)return {name,url}}return null}
+function renderCalendar(){
+  const now=new Date();const month=now.getMonth(),day=now.getDate();const container=document.getElementById('cal-container');
+  document.getElementById('date-label').textContent=now.toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  if(month===1&&day===29&&isLeapYear(now.getFullYear())){container.innerHTML=SPECIAL_FEB_29;return}
+  let index=dayOfYear(now);
+  // In a leap year, February 29 is a text-only exception. Keep March–December aligned to the 365-image calendar.
+  if(isLeapYear(now.getFullYear())&&month>1)index-=1;
+  const image=findImage(index);
+  if(image){container.innerHTML='';const img=document.createElement('img');img.id='daily-photo';img.alt=`Kalenderbild für ${now.toLocaleDateString('de-DE',{day:'numeric',month:'long'})}`;img.src=image.url;container.appendChild(img);const note=document.createElement('p');note.className='muted small';note.textContent=`Heute: ${image.name.split('/').pop()}`;container.appendChild(note)}
+  else{container.innerHTML='<div class="special-day"><h3>📦 Dein Kalenderbild wartet</h3><p>Bitte lade <strong>Kalender_Bilder_1.zip</strong> bis <strong>Kalender_Bilder_5.zip</strong> über die Schaltfläche unten. Danach wird das Bild für den heutigen Tag hier angezeigt.</p></div>'}
+}
+async function readZipImages(file, targetMap){
+  const archive=await JSZip.loadAsync(file);
+  const entries=Object.values(archive.files).filter(entry=>!entry.dir&&/\.(jpe?g|png|webp|gif|avif)$/i.test(entry.name)&&/\d+_Kalender_\d+/i.test(entry.name));
+  for(const entry of entries){
+    const blob=await entry.async('blob');
+    const ext=(entry.name.match(/\.(jpe?g|png|webp|gif|avif)$/i)||[])[0]?.toLowerCase()||'.jpg';
+    const mime=({'.jpg':'image/jpeg','.jpeg':'image/jpeg','.png':'image/png','.webp':'image/webp','.gif':'image/gif','.avif':'image/avif'})[ext]||'image/jpeg';
+    const key=entry.name.split('/').pop();
+    if(targetMap.has(key.toLowerCase())) URL.revokeObjectURL(targetMap.get(key.toLowerCase()));
+    targetMap.set(key.toLowerCase(),URL.createObjectURL(new Blob([blob],{type:mime})));
+  }
+  return entries.length;
+}
+async function loadZipFiles(files){
+  if(!window.JSZip){setZipStatus('Die ZIP-Bibliothek konnte nicht geladen werden. Prüfe deine Internetverbindung und lade die Seite erneut.');return}
+  const newMap=new Map();
+  try{
+    setZipStatus(`${files.length} ZIP-Datei(en) werden gelesen …`);
+    let total=0;
+    for(const file of files) total+=await readZipImages(file,newMap);
+    if(total===0) throw new Error('Keine passenden Kalenderbilder gefunden');
+    for(const url of zipImages.values())URL.revokeObjectURL(url);
+    zipImages=newMap;
+    setZipStatus(`${zipImages.size} Kalenderbilder aus ${files.length} ZIP-Datei(en) geladen. Die Bildauswahl richtet sich automatisch nach dem heutigen Datum.`);
+    renderCalendar();
+  }catch(error){
+    for(const url of newMap.values())URL.revokeObjectURL(url);
+    console.error(error);
+    setZipStatus('Die ZIP-Dateien konnten nicht vollständig gelesen werden. Bitte prüfe, ob alle fünf ZIP-Dateien gültig sind und die Kalenderbilder enthalten.');
+  }
+}
+document.getElementById('zip-input').addEventListener('change',event=>{
+  const files=Array.from(event.target.files||[]);
+  if(files.length)loadZipFiles(files);
+});
+async function loadDefaultZip(){
+  if(!window.JSZip){setZipStatus('Die ZIP-Bibliothek ist nicht verfügbar. Wähle die fünf ZIP-Dateien manuell aus.');return}
+  try{
+    setZipStatus('Lade Kalender_Bilder_1.zip bis Kalender_Bilder_5.zip …');
+    const files=[];
+    for(let i=1;i<=5;i++){
+      const name=`Kalender_Bilder_${i}.zip`;
+      const response=await fetch(name);
+      if(!response.ok)throw new Error(`${name} nicht gefunden`);
+      files.push(new File([await response.blob()],name,{type:'application/zip'}));
+    }
+    await loadZipFiles(files);
+  }catch(error){
+    console.error(error);
+    setZipStatus('Automatisches Laden war nicht möglich. Lege Kalender_Bilder_1.zip bis Kalender_Bilder_5.zip neben diese HTML-Datei oder wähle alle fünf ZIP-Dateien über „ZIP-Dateien auswählen“. Bei lokal geöffneten HTML-Dateien ist das automatische Laden häufig blockiert.');
+  }
+}
+document.getElementById('load-default-zip').addEventListener('click',loadDefaultZip);
+
+/* Musik: bestehende Tracks und Textbeschreibungen bleiben erhalten. */
+const songs=[
+ {f:'Musik1.mp3',c1:'#b3e5fc',c2:'#e1f5fe',a:'bubbles',t:'Dein Strahlen macht mich glücklich.'},
+ {f:'Musik2.mp3',c1:'#2c3e50',c2:'#000000',a:'lines',t:'Konzentration pur.'},
+ {f:'Musik3.mp3',c1:'#ffcc80',c2:'#ffb74d',a:'sun',t:'Unsere goldenen Sommer.'},
+ {f:'Musik4.mp3',c1:'#f48fb1',c2:'#e57373',a:'hearts',t:'Pure Liebe für dich.'},
+ {f:'Musik5.mp3',c1:'#a5d6a7',c2:'#81c784',a:'leaves',t:'Erinnerung an Italien.'},
+ {f:'Musik6.mp3',c1:'#f8bbd0',c2:'#f48fb1',a:'stars',t:'Ich liebe dich unendlich.'}
+];
+let curA='bubbles';const audio=document.getElementById('audio'),mText=document.getElementById('musicText');
+songs.forEach((song,i)=>{const button=document.createElement('button');button.textContent=`Track ${i+1}`;button.addEventListener('click',()=>{audio.src=song.f;audio.play().catch(()=>{mText.textContent='Drücke im Musikplayer auf Wiedergabe, um den Track zu starten.'});document.documentElement.style.setProperty('--p',song.c1);document.documentElement.style.setProperty('--s',song.c2);mText.textContent=song.t;curA=song.a});document.getElementById('music-btns').appendChild(button)});
+
+/* Dezente animierte Hintergründe */
+const cvs=document.getElementById('bgCanvas'),ctx=cvs.getContext('2d');let w=0,h=0,t=0;
+function resizeCanvas(){w=cvs.width=window.innerWidth* Math.min(window.devicePixelRatio||1,2);h=cvs.height=window.innerHeight*Math.min(window.devicePixelRatio||1,2);cvs.style.width=window.innerWidth+'px';cvs.style.height=window.innerHeight+'px';ctx.setTransform(Math.min(window.devicePixelRatio||1,2),0,0,Math.min(window.devicePixelRatio||1,2),0,0)}
+window.addEventListener('resize',resizeCanvas);resizeCanvas();
+function draw(){ctx.clearRect(0,0,window.innerWidth,window.innerHeight);t+=.008;ctx.font='20px sans-serif';for(let i=0;i<18;i++){const x=Math.sin(t+i*1.7)*window.innerWidth*.42+window.innerWidth/2;const y=(i*83+t*35)%window.innerHeight;if(curA==='hearts')ctx.fillText('♥',x,y);else if(curA==='stars')ctx.fillText('✦',x,y);else if(curA==='lines'){ctx.fillStyle='rgba(255,255,255,.14)';ctx.fillRect(0,(i*60+t*20)%window.innerHeight,window.innerWidth,1)}else if(curA==='bubbles'){ctx.beginPath();ctx.strokeStyle='rgba(255,255,255,.3)';ctx.arc(x,y,7+(i%4)*2,0,Math.PI*2);ctx.stroke()}else if(curA==='leaves')ctx.fillText('🍃',x,y);else if(curA==='sun')ctx.fillText('✺',x,y)}requestAnimationFrame(draw)}
+
+/* Tic Tac Toe */
+let tBoard=Array(9).fill(''),tActive=true;
+function initTTT(){const board=document.getElementById('ttt-board');board.innerHTML='';tBoard=Array(9).fill('');tActive=true;document.getElementById('ttt-status').textContent='Du fängst an!';for(let i=0;i<9;i++){const cell=document.createElement('button');cell.className='cell';cell.setAttribute('aria-label',`Feld ${i+1}`);cell.addEventListener('click',()=>{if(!tBoard[i]&&tActive){tBoard[i]='X';cell.textContent='X';checkTTT();if(tActive){document.getElementById('ttt-status').textContent='Der Computer ist dran …';setTimeout(aiT,350)}}});board.appendChild(cell)}}
+function aiT(){const empty=tBoard.map((v,i)=>v===''?i:null).filter(v=>v!==null);if(empty.length&&tActive){const move=empty[Math.floor(Math.random()*empty.length)];tBoard[move]='O';document.getElementById('ttt-board').children[move].textContent='O';checkTTT()}}
+function checkTTT(){const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];for(const line of wins){if(tBoard[line[0]]&&tBoard[line[0]]===tBoard[line[1]]&&tBoard[line[1]]===tBoard[line[2]]){tActive=false;document.getElementById('ttt-status').textContent=tBoard[line[0]]==='X'?'Du hast gewonnen! ❤️':'Der Computer gewinnt diesmal. Noch eine Runde?';return}}if(tBoard.every(Boolean)){tActive=false;document.getElementById('ttt-status').textContent='Unentschieden! Noch eine Runde?';return}if(!tBoard.includes('')){tActive=false;return}if(tBoard.includes('O'))document.getElementById('ttt-status').textContent='Du bist dran!'}
+
+/* Finde die drei Herzen */
+let ships=[],hits=0,guesses=0;
+function initBS(){const board=document.getElementById('bs-board');board.innerHTML='';hits=0;guesses=0;ships=[];while(ships.length<3){const n=Math.floor(Math.random()*36);if(!ships.includes(n))ships.push(n)}document.getElementById('bs-status').textContent='Finde die 3 Herzen!';for(let i=0;i<36;i++){const cell=document.createElement('button');cell.className='cell bs-cell';cell.setAttribute('aria-label',`Feld ${i+1}`);cell.addEventListener('click',()=>{if(cell.classList.contains('hit')||cell.classList.contains('miss'))return;guesses++;if(ships.includes(i)){cell.classList.add('hit');cell.textContent='❤️';hits++;document.getElementById('bs-status').textContent=hits===3?`Alle Herzen gefunden – in ${guesses} Versuchen! 🎉`:`Herz gefunden! Noch ${3-hits}.`}else{cell.classList.add('miss');cell.textContent='·';document.getElementById('bs-status').textContent='Hier ist kein Herz – versuch es weiter!'}});board.appendChild(cell)}}
+
+/* Herzchen-Memory */
+const memorySymbols=['💗','🌸','🐄','🦛','⭐','💌'];let memoryOpen=[],memoryMatched=0,memoryLock=false;
+function initMemory(){const board=document.getElementById('memory-board');board.innerHTML='';memoryOpen=[];memoryMatched=0;memoryLock=false;document.getElementById('memory-status').textContent='Finde die 6 Paare!';const deck=[...memorySymbols,...memorySymbols].sort(()=>Math.random()-.5);deck.forEach((symbol,index)=>{const card=document.createElement('button');card.className='memory-card';card.textContent='?';card.dataset.symbol=symbol;card.setAttribute('aria-label',`Memory-Karte ${index+1}`);card.addEventListener('click',()=>{if(memoryLock||card.classList.contains('revealed')||card.classList.contains('matched'))return;card.textContent=symbol;card.classList.add('revealed');memoryOpen.push(card);if(memoryOpen.length===2){memoryLock=true;const [a,b]=memoryOpen;if(a.dataset.symbol===b.dataset.symbol){a.classList.add('matched');b.classList.add('matched');memoryMatched++;memoryOpen=[];memoryLock=false;document.getElementById('memory-status').textContent=memoryMatched===6?'Alle Paare gefunden! Du bist großartig! 💖':`Schon ${memoryMatched} von 6 Paaren gefunden!`}else{setTimeout(()=>{a.textContent='?';b.textContent='?';a.classList.remove('revealed');b.classList.remove('revealed');memoryOpen=[];memoryLock=false},750)}}});board.appendChild(card)})}
+
+/* Reaktionsspiel */
+let clickScore=0,clickRunning=false,clickTimer=null;
+document.getElementById('click-start').addEventListener('click',()=>{if(clickRunning)return;clickScore=0;clickRunning=true;document.getElementById('click-score').textContent=clickScore;document.getElementById('click-status').textContent='Los! Du hast 10 Sekunden!';document.getElementById('heart-click').disabled=false;document.getElementById('click-start').disabled=true;clearTimeout(clickTimer);clickTimer=setTimeout(()=>{clickRunning=false;document.getElementById('heart-click').disabled=true;document.getElementById('click-start').disabled=false;document.getElementById('click-status').textContent=`Zeit vorbei! Du hast ${clickScore} Herzen gesammelt. 💗`},10000)});
+document.getElementById('heart-click').addEventListener('click',()=>{if(!clickRunning)return;clickScore++;document.getElementById('click-score').textContent=clickScore});
+
+/* Interaktive Kuh- und Nilpferdseite mit Effekten */
+const stage=document.getElementById('creature-stage');const messages={Kuh:['Muuuuh! Ein Lächeln für dich! 🐮','Die Kuh schickt dir eine Portion Glück! 🌼','Muh-nifestiere heute etwas Schönes!'],Nilpferd:['Platsch! Eine Umarmung aus dem Wasser! 🦛','Das Nilpferd tanzt nur für dich! 💃','Ein großer Freund für ein großes Herz!'],Herz:['Ganz viel Liebe für dich! ❤️','Herzchenregen! 💕','Du bist etwas ganz Besonderes! ✨']};
+function popEffect(target,emoji){const rect=target.getBoundingClientRect();const el=document.createElement('span');el.className='floating-emoji';el.textContent=emoji;el.style.left=(rect.left+rect.width/2-window.innerWidth*.0)+'px';el.style.top=(rect.top+window.scrollY)+'px';el.style.position='absolute';el.style.zIndex='10';document.body.appendChild(el);setTimeout(()=>el.remove(),1800)}
+function creatureAction(el){const animal=el.dataset.animal;const options=messages[animal]||messages.Herz;document.getElementById('creature-message').textContent=options[Math.floor(Math.random()*options.length)];el.animate([{transform:'scale(1)'},{transform:'scale(1.25) rotate(-8deg)'},{transform:'scale(1)'}],{duration:500});const r=el.getBoundingClientRect();const fx=document.createElement('span');fx.className='floating-emoji';fx.textContent=['✨','💗','🌸','⭐'][Math.floor(Math.random()*4)];fx.style.left=(r.left+r.width/2)+'px';fx.style.top=(r.top+window.scrollY)+'px';document.body.appendChild(fx);setTimeout(()=>fx.remove(),1800)}
+document.querySelectorAll('.creature').forEach(el=>{el.addEventListener('click',()=>creatureAction(el));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();creatureAction(el)}})});
+document.getElementById('sprinkle-btn').addEventListener('click',()=>{for(let i=0;i<14;i++){const fx=document.createElement('span');fx.className='floating-emoji';fx.textContent=['✨','💖','🌸','⭐','💕'][Math.floor(Math.random()*5)];fx.style.left=(10+Math.random()*80)+'vw';fx.style.top=(window.scrollY+window.innerHeight*.45+Math.random()*100)+'px';document.body.appendChild(fx);setTimeout(()=>fx.remove(),1800)}document.getElementById('creature-message').textContent='Ein ganzer Regen aus Glitzer und Liebe! ✨'});
+document.getElementById('moo-btn').addEventListener('click',()=>{const lines=['Muuuuh plus Platsch ergibt ganz viel Liebe! 🐄🦛','Zwei verrückte Freunde, ein riesengroßes Herz! 💗','Kuh und Nilpferd sagen: Du bist wunderbar! 🌈'];document.getElementById('creature-message').textContent=lines[Math.floor(Math.random()*lines.length)]});
+
+/* Start */
+renderCalendar();loadDefaultZip();initTTT();initBS();initMemory();
+</script>
+</body>
+</html>
