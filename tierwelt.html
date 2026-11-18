@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#fef4f8"><title>Unsere kleine Tierwelt 💗</title><style>
+
+:root{--pink:#d94f83;--pink-dark:#b93670;--ink:#493542;--muted:#795e6d;--shadow:0 22px 65px rgba(91,42,67,.10)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;font-family:Inter,ui-rounded,"Segoe UI",system-ui,sans-serif;color:var(--ink);background:radial-gradient(ellipse at 10% 8%,#fff 0,transparent 28%),radial-gradient(ellipse at 90% 60%,#e2f6fb 0,transparent 30%),linear-gradient(145deg,#fff8fb,#f8dfeb 48%,#dff4f8);line-height:1.65;overflow-x:hidden}
+.wrap{width:min(1100px,calc(100% - 36px));margin:auto}
+header{text-align:center;padding:clamp(40px,8vw,82px) 12px 30px}
+.eyebrow{font-size:.76rem;letter-spacing:.19em;text-transform:uppercase;color:#a44b72;font-weight:850}
+h1{font-size:clamp(2.3rem,7vw,4.8rem);line-height:1.04;letter-spacing:-.05em;color:var(--pink);margin:14px 0;text-wrap:balance}
+header p{font-size:clamp(1rem,2.5vw,1.2rem);color:#7d6070;line-height:1.7}
+.btn{display:inline-flex;justify-content:center;align-items:center;gap:8px;margin:7px;padding:12px 20px;border:1px solid transparent;border-radius:99px;background:linear-gradient(135deg,#ed82a9,#d94f83);color:white;text-decoration:none;font:inherit;font-weight:800;box-shadow:0 9px 24px rgba(217,79,131,.2);cursor:pointer;transition:transform .25s,box-shadow .25s}
+.btn:hover{transform:translateY(-3px);box-shadow:0 15px 30px rgba(217,79,131,.27)}
+.btn:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid #9b5bda;outline-offset:4px}
+.btn.secondary{background:rgba(255,255,255,.8);color:#a54470;border-color:#efc2d5;box-shadow:none}
+.panel{background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.95);border-radius:30px;padding:clamp(20px,4vw,40px);margin:18px auto 28px;box-shadow:var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.animals{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:22px}
+.animal-card{overflow:hidden;border:1px solid #f7e6ed;border-radius:25px;background:#fff;box-shadow:0 10px 30px rgba(85,48,64,.08);transition:transform .35s,box-shadow .35s}
+.animal-card:hover{transform:translateY(-6px);box-shadow:0 20px 42px rgba(85,48,64,.13)}
+.animal-card img{display:block;width:100%;height:clamp(230px,32vw,340px);object-fit:cover;transition:transform .6s}
+.animal-card:hover img{transform:scale(1.035)}
+.animal-info{padding:22px;text-align:center}
+.photo-section{margin-top:38px}
+.photo-section h2{color:var(--pink);margin:0 0 8px;font-size:clamp(1.55rem,3.5vw,2rem);letter-spacing:-.03em}
+.photo-section>p{color:var(--muted);text-align:center;margin:0 0 20px}
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:15px}
+.photo-grid figure{margin:0;overflow:hidden;border:1px solid #f4e3eb;border-radius:20px;background:#fff;box-shadow:0 8px 24px rgba(85,48,64,.07);transition:transform .3s,box-shadow .3s}
+.photo-grid figure:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(85,48,64,.12)}
+.photo-grid img{display:block;width:100%;height:190px;object-fit:cover;transition:transform .45s;cursor:zoom-in}
+.photo-grid figure:hover img{transform:scale(1.045)}
+.photo-grid figcaption{padding:10px 12px;font-size:.9rem;color:#795e6d;text-align:center}.photo-grid figcaption a{color:#a34370;text-decoration:underline;text-underline-offset:2px}.photo-credit{font-size:.78rem;color:#795e6d;text-align:center;margin:4px 0 0}.photo-credit a{color:#a34370}
+h2{color:var(--pink);margin:0 0 8px;font-size:1.65rem}
+.animal-info p{line-height:1.7;color:var(--muted)}
+.message{min-height:2em;color:#a34370;font-weight:800;text-align:center;font-size:1.1rem}
+.stage{text-align:center;background:linear-gradient(135deg,#fff0f6,#edfaff);border:1px solid #f7e1eb;border-radius:25px;padding:clamp(22px,4vw,34px);margin-top:38px}
+.stage-animals{display:flex;justify-content:center;gap:clamp(12px,5vw,40px);font-size:clamp(3.5rem,12vw,6rem)}
+.emoji{cursor:pointer;display:inline-block;animation:bob 2.5s ease-in-out infinite;user-select:none;transition:filter .2s}
+.emoji:hover{filter:drop-shadow(0 8px 8px #d94f8340)}
+.emoji:nth-child(2){animation-delay:.4s}.emoji:nth-child(3){animation-delay:.8s}
+footer{text-align:center;padding:22px 0 45px;color:#906f80}
+.spark{position:fixed;pointer-events:none;font-size:1.7rem;animation:rise 1.5s ease-out forwards;z-index:5}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.reveal.is-visible{opacity:1;transform:translateY(0)}
+.lightbox{position:fixed;inset:0;background:rgba(35,19,30,.88);display:grid;place-items:center;padding:24px;z-index:1000;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+.lightbox.open{opacity:1;visibility:visible}
+.lightbox img{max-width:min(100%,1100px);max-height:82vh;object-fit:contain;border-radius:14px}
+.lightbox button{position:absolute;top:18px;right:20px;width:46px;height:46px;border:0;border-radius:50%;background:#fff;color:#9d3e6b;font-size:1.5rem;cursor:pointer}
+@keyframes bob{50%{transform:translateY(-10px) rotate(4deg)}}
+@keyframes rise{to{opacity:0;transform:translateY(-130px) rotate(25deg) scale(1.4)}}
+@media(max-width:600px){.wrap{width:calc(100% - 24px)}.panel{border-radius:24px}.photo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.photo-grid img{height:155px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
+
+</style></head><body><header class="wrap"><div class="eyebrow">Ein kleiner Ausflug ins Glück</div><h1>🐄 Unsere Kuh- & Nilpferdwelt 🦛</h1><p>Zwei ziemlich verschiedene Tiere, eine Menge Quatsch<br>und ganz viel Liebe für dich. 💗</p><a class="btn" href="index.html">← Zurück zur Hauptseite</a><a class="btn secondary" href="spiele.html">🎮 Unsere Spielewelt</a></header><main class="wrap"><section class="panel"><div class="animals"><article class="animal-card"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Cow%20close-up.jpg?width=1200" alt="Echte Kühe auf einer Wiese – Foto von Soulbust" loading="lazy"><div class="animal-info"><p class="photo-credit">Foto: <a href="https://commons.wikimedia.org/wiki/File:Cow_close-up.jpg" target="_blank" rel="noopener noreferrer">Soulbust / Wikimedia Commons</a></p><h2>Die Kuh 🐄</h2><p>Gemütlich, liebenswert und immer für ein fröhliches „Muuuuh!“ zu haben.</p><button class="btn" onclick="say('Kuh')">Kuh zum Lachen bringen</button></div></article><article class="animal-card"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Close%20up%20of%20a%20hippopotamus.jpg?width=1200" alt="Nahaufnahme eines echten Nilpferds – Foto von Muhammad Mahdi Karim" loading="lazy"><div class="animal-info"><p class="photo-credit">Foto: <a href="https://commons.wikimedia.org/wiki/File:Close_up_of_a_hippopotamus.jpg" target="_blank" rel="noopener noreferrer">Muhammad Mahdi Karim / Wikimedia Commons</a></p><h2>Das Nilpferd 🦛</h2><p>Ein sanfter Wasser-Riese, der am liebsten planscht und Herzen sammelt.</p><button class="btn" onclick="say('Nilpferd')">Nilpferd begrüßen</button></div></article></div>
+<section class="photo-section"><h2>🐄 Echte Kuh-Fotos</h2><p style="text-align:center;color:#795e6d">Eine kleine Galerie mit echten Fotografien – jedes Bild zeigt ausschließlich Kühe.</p><div class="photo-grid" id="cow-grid"></div></section>
+<section class="photo-section"><h2>🦛 Echte Nilpferd-Fotos</h2><p style="text-align:center;color:#795e6d">Ausschließlich echte Nilpferde auf echten Fotos – keine Zeichnungen, KI-Bilder oder anderen Tierarten.</p><div class="photo-grid" id="hippo-grid"></div></section>
+<div class="stage"><div class="stage-animals"><span class="emoji" role="button" tabindex="0" onclick="say('Kuh')" onkeydown="keySay(event,'Kuh')">🐄</span><span class="emoji" role="button" tabindex="0" onclick="say('Nilpferd')" onkeydown="keySay(event,'Nilpferd')">🦛</span><span class="emoji" role="button" tabindex="0" onclick="say('Herz')" onkeydown="keySay(event,'Herz')">💖</span></div><p class="message" id="message" aria-live="polite">Tippe auf einen tierischen Freund für eine kleine Überraschung!</p><button class="btn" onclick="sparkle(18)">✨ Glitzerregen</button><button class="btn secondary" onclick="surprise()">🎁 Liebesüberraschung</button></div></section></main><footer class="wrap">Mit ganz viel Liebe für Daria 💞<br><a class="btn secondary" href="index.html">Zurück zum Kalender</a></footer>
+<script>
+
+const cowPhotos=[
+{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Cow%20close-up.jpg?width=900',label:'Kühe auf einer Wiese',credit:'Soulbust',url:'https://commons.wikimedia.org/wiki/File:Cow_close-up.jpg'},
+{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Cow%20in%20a%20field.jpg?width=900',label:'Kuh auf dem Feld',credit:'Muhajir.up',url:'https://commons.wikimedia.org/wiki/File:Cow_in_a_field.jpg'},
+{src:'https://commons.wikimedia.org/wiki/Special:FilePath/2019-07-07%20Cow%20standing%20on%20the%20field.jpg?width=900',label:'Kuh auf einer grünen Weide',credit:'Maksym Kozlenko',url:'https://commons.wikimedia.org/wiki/File:2019-07-07_Cow_standing_on_the_field.jpg'},
+{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Cow%20and%20calf%20in%20field%20%28AM%2086300-1%29.jpg?width=900',label:'Kuh mit Kalb',credit:'Tudor Washington Collins / Auckland War Memorial Museum',url:'https://commons.wikimedia.org/wiki/File:Cow_and_calf_in_field_(AM_86300-1).jpg'},
+{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Cow%20close-up%202.jpg?width=900',label:'Kühe auf der Weide',credit:'Soulbust',url:'https://commons.wikimedia.org/wiki/File:Cow_close-up_2.jpg'},
+{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Lone%20cow%20in%20a%20field%20-%202%20June%202025.jpg?width=900',label:'Einzelne Kuh auf einer Wiese',credit:'Aethonatic',url:'https://commons.wikimedia.org/wiki/File:Lone_cow_in_a_field_-_2_June_2025.jpg'},
+{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Cow%20in%20field%20%28AM%2080065-2%29.jpg?width=900',label:'Kuh beim Grasen',credit:'Tudor Washington Collins / Auckland War Memorial Museum',url:'https://commons.wikimedia.org/wiki/File:Cow_in_field_(AM_80065-2).jpg'},
+{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Cow%20in%20a%20field%20%28AM%2086304-2%29.jpg?width=900',label:'Kuh auf einer Weide',credit:'Tudor Washington Collins / Auckland War Memorial Museum',url:'https://commons.wikimedia.org/wiki/File:Cow_in_a_field_(AM_86304-2).jpg'},
+{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Cow%20in%20field%20%28AM%2080220-2%29.jpg?width=900',label:'Helle Kuh auf einer Wiese',credit:'Tudor Washington Collins / Auckland War Memorial Museum',url:'https://commons.wikimedia.org/wiki/File:Cow_in_field_(AM_80220-2).jpg'},
+{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Cows.jpg?width=900',label:'Kühe auf der Weide',credit:'Andy Wright',url:'https://commons.wikimedia.org/wiki/File:Cows.jpg'}
+];
+const hippoPhotos=[
+{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Close%20up%20of%20a%20hippopotamus.jpg?width=900',label:'Nahaufnahme eines Nilpferds',credit:'Muhammad Mahdi Karim',url:'https://commons.wikimedia.org/wiki/File:Close_up_of_a_hippopotamus.jpg'},
+{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Photo-hippopotamus.jpg?width=900',label:'Nilpferd im Zoo',credit:'Dsing0039',url:'https://commons.wikimedia.org/wiki/File:Photo-hippopotamus.jpg'},
+{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Hippotamus.jpg?width=900',label:'Zwei Nilpferde im Wasser',credit:'Benoni95',url:'https://commons.wikimedia.org/wiki/File:Hippotamus.jpg'},
+{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Common%20hippopotamus.jpg?width=900',label:'Nilpferde im Wasser',credit:'Azimronnie',url:'https://commons.wikimedia.org/wiki/File:Common_hippopotamus.jpg'},
+{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Hippo.jpg?width=900',label:'Nilpferd im Wasser',credit:'snowyowls',url:'https://commons.wikimedia.org/wiki/File:Hippo.jpg'},
+{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Hippopotamus%20amphibius%20qtl1.jpg?width=900',label:'Nilpferd-Porträt',credit:'Quartl',url:'https://commons.wikimedia.org/wiki/File:Hippopotamus_amphibius_qtl1.jpg'},
+{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Hippo%27s.jpg?width=900',label:'Nilpferde in ihrem Lebensraum',credit:'AerialcamSA',url:'https://commons.wikimedia.org/wiki/File:Hippo%27s.jpg'},
+{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Hippopotamus%20%28Hippopotamus%20amphibius%29.jpg?width=900',label:'Nilpferd im Wasser',credit:'Anil.itkan',url:'https://commons.wikimedia.org/wiki/File:Hippopotamus_(Hippopotamus_amphibius).jpg'}
+];
+function fillPhotoGrid(id,items){const grid=document.getElementById(id);items.forEach(item=>{const figure=document.createElement('figure'),img=document.createElement('img'),cap=document.createElement('figcaption'),credit=document.createElement('a');img.src=item.src;img.alt=item.label;img.loading='lazy';img.referrerPolicy='no-referrer';img.onerror=()=>{figure.style.display='none'};cap.append(document.createTextNode(item.label+' · Foto: '));credit.href=item.url;credit.target='_blank';credit.rel='noopener noreferrer';credit.textContent=item.credit+' (Wikimedia Commons)';cap.append(credit);figure.append(img,cap);grid.append(figure)})}
+fillPhotoGrid('cow-grid',cowPhotos);fillPhotoGrid('hippo-grid',hippoPhotos);
+
+const msgs={Kuh:['Muuuuh! Ein Lächeln nur für dich! 🌼','Die Kuh schickt dir eine Portion Glück! 🐮','Muh-nifestiere heute etwas Schönes!'],Nilpferd:['Platsch! Eine Umarmung aus dem Wasser! 💦','Das Nilpferd tanzt nur für dich!','Ein großer Freund für ein großes Herz!'],Herz:['Du bist etwas ganz Besonderes. ❤️','Herzchenregen nur für dich! 💕','Meine Lieblingsperson bist du! ✨']};function say(n){const a=msgs[n]||msgs.Herz;document.getElementById('message').textContent=a[Math.floor(Math.random()*a.length)];sparkle(4)}function keySay(e,n){if(e.key==='Enter'||e.key===' '){e.preventDefault();say(n)}}function sparkle(count){for(let i=0;i<count;i++){const s=document.createElement('span');s.className='spark';s.textContent=['✨','💗','🌸','⭐','💕'][Math.floor(Math.random()*5)];s.style.left=Math.random()*innerWidth+'px';s.style.top=(innerHeight*(.35+Math.random()*.5))+'px';document.body.appendChild(s);setTimeout(()=>s.remove(),1600)}}function surprise(){const a=['Muuuuh plus Platsch ergibt ganz viel Liebe! 🐄🦛','Zwei verrückte Freunde, ein riesengroßes Herz! 💗','Kuh und Nilpferd sagen: Du bist wunderbar! 🌈'];document.getElementById('message').textContent=a[Math.floor(Math.random()*a.length)];sparkle(20)}
+</script>
+<script>
+(() => {
+  const sections = document.querySelectorAll('.panel, .stage');
+  sections.forEach(section => section.classList.add('reveal'));
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.08});
+  sections.forEach(section => observer.observe(section));
+
+  const overlay = document.createElement('div');
+  overlay.className = 'lightbox';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-label', 'Bildansicht');
+  overlay.innerHTML = '<button type="button" aria-label="Bildansicht schließen">×</button><img alt="">';
+  document.body.appendChild(overlay);
+  const preview = overlay.querySelector('img');
+  const close = () => { overlay.classList.remove('open'); preview.removeAttribute('src'); };
+  overlay.querySelector('button').addEventListener('click', close);
+  overlay.addEventListener('click', event => { if (event.target === overlay) close(); });
+  document.addEventListener('keydown', event => { if (event.key === 'Escape') close(); });
+  document.addEventListener('click', event => {
+    const img = event.target.closest('.photo-grid img, .animal-card img');
+    if (!img) return;
+    preview.src = img.currentSrc || img.src;
+    preview.alt = img.alt || '';
+    overlay.classList.add('open');
+  });
+})();
+</script>
+
+</body></html>

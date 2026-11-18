@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fff5fa">
+<title>Unsere Spielewelt 💗</title>
+<style>
+:root{--pink:#d94f88;--ink:#493542;--muted:#806878;--line:#f3dce7;--shadow:0 20px 55px rgba(91,42,67,.09)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,ui-rounded,"Segoe UI",system-ui,sans-serif;color:var(--ink);background:radial-gradient(ellipse at 10% 8%,#fff 0,transparent 28%),radial-gradient(ellipse at 90% 50%,#e6f6fb 0,transparent 28%),linear-gradient(145deg,#fff8fb,#ffe5ef 55%,#f0eaff);line-height:1.65}
+.wrap{width:min(1100px,calc(100% - 32px));margin:auto}
+header{text-align:center;padding:clamp(40px,8vw,78px) 12px 28px}
+.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:.75rem;font-weight:850;color:#a44b72}
+h1{font-size:clamp(2.5rem,7vw,4.7rem);line-height:1.04;letter-spacing:-.05em;color:var(--pink);margin:14px 0}
+header p{color:var(--muted);font-size:1.1rem;max-width:680px;margin:0 auto}
+.btn{display:inline-flex;align-items:center;justify-content:center;margin:7px;padding:11px 18px;border:1px solid transparent;border-radius:99px;background:linear-gradient(135deg,#ed82a9,#d94f83);color:white;text-decoration:none;font:inherit;font-weight:800;cursor:pointer;box-shadow:0 8px 22px #d94f8326;transition:.22s}
+.btn:hover{transform:translateY(-3px);box-shadow:0 14px 28px #d94f8335}.btn.secondary{background:#fff;color:#a54470;border-color:#efc2d5;box-shadow:none}
+.panel{margin:20px auto;padding:clamp(20px,4vw,36px);border:1px solid #fff;border-radius:28px;background:rgba(255,255,255,.8);backdrop-filter:blur(16px);box-shadow:var(--shadow)}
+h2{color:var(--pink);font-size:clamp(1.6rem,4vw,2.2rem);text-align:center;margin:0 0 8px;letter-spacing:-.03em}
+.sub{text-align:center;color:var(--muted);margin:0 0 22px}
+.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px}
+.game{padding:20px;border-radius:22px;background:linear-gradient(145deg,#fffafd,#fff1f7);border:1px solid #f5e0e9;text-align:center}
+.game h3{margin:0;color:#98506f}.grid{display:grid;gap:7px;justify-content:center;margin:16px auto}
+.ttt{grid-template-columns:repeat(3,clamp(54px,12vw,72px))}.bs{grid-template-columns:repeat(6,clamp(29px,7vw,42px))}
+.cell{width:clamp(54px,12vw,72px);height:clamp(54px,12vw,72px);border:1px solid #f2d6e2;border-radius:13px;background:#fff;color:#b54575;font-size:1.5rem;font-weight:850;cursor:pointer;transition:.18s}
+.cell:hover:not(:disabled){transform:scale(1.06);background:#ffe6f0}.bs .cell{width:clamp(29px,7vw,42px);height:clamp(29px,7vw,42px);font-size:1rem;background:#e9f6fc}
+.cell.hit{background:#e95b8d;color:white}.cell.miss{background:#e9e4e9;color:#7d7280}
+.game button.action{border:0;border-radius:99px;padding:10px 16px;background:#df4f88;color:#fff;font:inherit;font-weight:750;cursor:pointer}
+.status{min-height:1.5em;color:#9e4770;font-weight:700}
+.reaction-area{min-height:150px;display:grid;place-items:center;border-radius:20px;background:linear-gradient(135deg,#fff0f6,#edfaff);margin:14px 0;padding:20px;cursor:pointer;user-select:none}
+.reaction-area strong{font-size:clamp(1.4rem,4vw,2rem);color:#a74470;text-align:center}
+.filters{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin:20px 0}
+.filters button{border:1px solid #efc2d5;background:#fff;color:#a54470;border-radius:99px;padding:9px 14px;font:inherit;font-weight:750;cursor:pointer}
+.filters button.active{background:#d94f88;color:white;border-color:#d94f88}
+.recommendations{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,285px),1fr));gap:13px}
+.rec{padding:17px;border:1px solid #f2e0e8;border-radius:18px;background:#fff;transition:transform .2s,box-shadow .2s}
+.rec:hover{transform:translateY(-3px);box-shadow:0 10px 24px #6b405015}
+.rec h3{margin:0 0 5px;color:#914568;font-size:1.06rem}.rec p{margin:5px 0;color:#725d69;font-size:.94rem}
+.tag{display:inline-block;margin:3px 4px 0 0;padding:4px 9px;border-radius:99px;background:#fff0f6;color:#a54470;font-size:.75rem;font-weight:800}
+.tag.pc{background:#edf5ff;color:#466d9c}.tag.switch{background:#eff9ed;color:#4e8050}.tag.ps{background:#eef0ff;color:#555f9e}
+.choice{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.choice button{border:1px solid #efc2d5;background:white;color:#a54470;border-radius:99px;padding:10px 15px;font:inherit;font-weight:750;cursor:pointer}
+.choice button.selected{background:#d94f88;color:white}
+footer{text-align:center;padding:20px 10px 45px;color:#906f80}
+@media(max-width:560px){.wrap{width:calc(100% - 22px)}.panel{border-radius:23px;padding:19px}.rec{padding:15px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <div class="eyebrow">Zusammen spielen ist doppelt schön</div>
+  <h1>🎮 Unsere Spielewelt 💗</h1>
+  <p>Ob eine schnelle Runde zwischendurch, ein gemütlicher Brettspielabend oder ein gemeinsames Abenteuer – such dir aus, worauf du Lust hast.</p>
+  <a class="btn" href="index.html">← Zurück zur Hauptseite</a>
+  <a class="btn secondary" href="tierwelt.html">🐄 Zur Tierwelt</a>
+</header>
+<main class="wrap">
+  <section class="panel">
+    <h2>💗 Kleine Spiele für uns zwei</h2>
+    <p class="sub">Direkt hier im Browser – ganz ohne Installation.</p>
+    <div class="games">
+      <article class="game">
+        <h3>⭕ Tic Tac Toe</h3><p>Du spielst X, der Computer O.</p>
+        <div id="ttt-board" class="grid ttt"></div>
+        <p id="ttt-status" class="status" aria-live="polite">Du bist X. Viel Glück!</p>
+        <button class="action" type="button" onclick="initTTT()">Nochmal spielen</button>
+      </article>
+      <article class="game">
+        <h3>💞 Finde die drei Herzen</h3><p>In welchem Feld verstecken sie sich?</p>
+        <div id="bs-board" class="grid bs"></div>
+        <p id="bs-status" class="status" aria-live="polite">Finde alle drei Herzen!</p>
+        <button class="action" type="button" onclick="initBS()">Neues Spielfeld</button>
+      </article>
+      <article class="game">
+        <h3>⚡ Herzchen-Reaktionstest</h3><p>Warte auf Grün und tippe so schnell du kannst!</p>
+        <div class="reaction-area" id="reaction-area" role="button" tabindex="0" aria-label="Reaktionstest starten"><strong id="reaction-text">Tippe hier zum Starten 💗</strong></div>
+        <p class="status" id="reaction-status" aria-live="polite">Wie schnell bist du?</p>
+        <button class="action" type="button" id="reaction-start">Start</button>
+      </article>
+    </div>
+  </section>
+
+  <section class="panel" id="videogames">
+    <h2>🕹️ Was spielen wir als Nächstes?</h2>
+    <p class="sub">Eine größere Sammlung mit klar getrennten Plattform-Kategorien: Jeder Titel erscheint genau einmal, damit die Auswahl übersichtlich bleibt.</p>
+    <div class="filters" id="platform-filters">
+      <button class="active" data-filter="all">Alle Plattformen</button>
+      <button data-filter="switch">Nintendo Switch</button>
+      <button data-filter="switch2">Nintendo Switch 2</button>
+      <button data-filter="ps5">PS5</button>
+      <button data-filter="pc">PC</button>
+    </div>
+    <div class="recommendations" id="video-list"></div>
+    <p class="sub" style="font-size:.85rem;margin-top:18px">Die Titel sind hier bewusst jeweils nur einer Rubrik zugeordnet – auch wenn einzelne Spiele tatsächlich auf weiteren Systemen erhältlich sind. Spielerzahl, lokaler/Online-Modus und Edition können variieren; vor dem Kauf bitte im Store prüfen.</p>
+  </section>
+
+  <section class="panel" id="boardgames">
+    <h2>🎲 Brettspiel-Abend?</h2>
+    <p class="sub">Von gemütlich und kurz bis taktisch und richtig spannend.</p>
+    <div class="recommendations" id="board-list"></div>
+    <div class="choice">
+      <button type="button" data-mood="kurz">⏱️ Kurz & locker</button>
+      <button type="button" data-mood="kooperativ">🤝 Gemeinsam gegen das Spiel</button>
+      <button type="button" data-mood="strategie">🧠 Strategie</button>
+      <button type="button" data-mood="party">🎉 Lustig & gesellig</button>
+    </div>
+    <p class="status" id="board-suggestion" aria-live="polite">Wählt eine Stimmung und findet euer nächstes Brettspiel.</p>
+  </section>
+</main>
+<footer class="wrap">Ein Team, viele Abenteuer – und immer mit ganz viel Liebe. 💞</footer>
+<script>
+const videoGames = [
+ // Nintendo Switch – jeder Titel ist in genau einer Kategorie gelistet
+ {name:'Mario Kart 8 Deluxe',platforms:['switch'],type:'Rennen',players:'Lokal bis 4 · online bis 12',desc:'Der Klassiker für schnelle Rennen, Cups und kleine Revanchen.'},
+ {name:'Super Smash Bros. Ultimate',platforms:['switch'],type:'Kampf / Party',players:'Lokal bis 8 · online',desc:'Rasante Kämpfe mit einer riesigen Auswahl an Figuren.'},
+ {name:'Super Mario Bros. Wonder',platforms:['switch'],type:'Jump ’n’ Run',players:'Lokal bis 4',desc:'Kunterbuntes Plattform-Abenteuer mit überraschenden Leveln.'},
+ {name:'Luigi’s Mansion 3',platforms:['switch'],type:'Action / Rätsel',players:'Koop für 2 · Mehrspieler-Modi',desc:'Gemeinsam als Luigi und Fluigi ein Spukhotel erkunden.'},
+ {name:'Splatoon 3',platforms:['switch'],type:'Team-Shooter',players:'Online-Teamkämpfe',desc:'Farbschlachten, Revierkämpfe und kooperative Salmon-Run-Missionen.'},
+ {name:'Nintendo Switch Sports',platforms:['switch'],type:'Sport / Party',players:'Lokal und online',desc:'Bowling, Tennis, Golf und weitere Sportarten für zwischendurch.'},
+ {name:'Super Mario 3D World + Bowser’s Fury',platforms:['switch'],type:'Jump ’n’ Run',players:'Lokal bis 4 (3D World)',desc:'Gemeinsam durch kreative Welten hüpfen und Sterne sammeln.'},
+ {name:'Pikmin 4',platforms:['switch'],type:'Strategie / Abenteuer',players:'Koop-Unterstützung für 2',desc:'Kleine Expeditionen planen, Pikmin führen und Aufgaben lösen.'},
+ {name:'Animal Crossing: New Horizons',platforms:['switch'],type:'Cozy / Lebenssimulation',players:'Gemeinsam auf einer Insel',desc:'Eine Insel gestalten, sammeln, dekorieren und entspannt besuchen.'},
+ {name:'Boomerang Fu',platforms:['switch'],type:'Party / Action',players:'Lokal bis 6',desc:'Kurze, herrlich chaotische Arenakämpfe mit Bumerangs.'},
+
+ // Nintendo Switch 2
+ {name:'Mario Kart World',platforms:['switch2'],type:'Rennen',players:'Lokal bis 4 · online bis 24',desc:'Offene Rennwelt mit großen Strecken und vielen gemeinsamen Rennen.'},
+ {name:'Donkey Kong Bananza',platforms:['switch2'],type:'Action / Abenteuer',players:'Lokaler Koop-Modus',desc:'Zerstörbare Welten erkunden und gemeinsam Geheimnisse entdecken.'},
+ {name:'Split Fiction',platforms:['switch2'],type:'Koop-Abenteuer',players:'2 · lokal oder online',desc:'Ein Koop-Abenteuer voller kreativer Welten und überraschender Fähigkeiten.'},
+ {name:'Sonic Racing: CrossWorlds',platforms:['switch2'],type:'Rennen',players:'Lokal und online',desc:'Rasante Arcade-Rennen mit wechselnden Strecken und Gastfiguren.'},
+ {name:'Survival Kids',platforms:['switch2'],type:'Survival / Koop',players:'Koop für bis zu 4',desc:'Auf einer Insel Ressourcen sammeln, bauen und gemeinsam überleben.'},
+ {name:'Puyo Puyo Tetris 2S',platforms:['switch2'],type:'Puzzle / Party',players:'Lokal und online',desc:'Tetris und Puyo Puyo in schnellen Duellen und Team-Modi.'},
+ {name:'Kirby und das vergessene Land – Switch 2 Edition',platforms:['switch2'],type:'Jump ’n’ Run',players:'Koop für 2',desc:'Knuffiges Abenteuer mit zusätzlichen Inhalten und lokalem Koop.'},
+ {name:'Fast Fusion',platforms:['switch2'],type:'Rennen',players:'Lokaler Mehrspieler',desc:'Futuristische Anti-Gravitationsrennen mit hohem Tempo.'},
+ {name:'Drag x Drive',platforms:['switch2'],type:'Sport',players:'Online-Mehrspieler',desc:'Ein ungewöhnliches Basketball-Spiel mit Bewegungssteuerung.'},
+ {name:'Hyrule Warriors: Chronik der Versiegelung',platforms:['switch2'],type:'Action / Koop',players:'Lokaler Mehrspieler',desc:'Große Schlachten im Zelda-Universum – gemeinsam Gegnerwellen bezwingen.'},
+
+ // PlayStation 5
+ {name:'It Takes Two',platforms:['ps5'],type:'Koop-Abenteuer',players:'2 · lokal oder online',desc:'Ein speziell für zwei Personen entwickeltes Abenteuer mit ständig neuen Ideen.'},
+ {name:'Sackboy: A Big Adventure',platforms:['ps5'],type:'Jump ’n’ Run',players:'Lokal/online bis 4',desc:'Charmantes Plattform-Abenteuer, das gemeinsam besonders viel Spaß macht.'},
+ {name:'Helldivers 2',platforms:['ps5'],type:'Action-Koop',players:'Online-Koop bis 4',desc:'Gemeinsam Missionen bestehen – mit reichlich Chaos und Teamwork.'},
+ {name:'Gran Turismo 7',platforms:['ps5'],type:'Rennsimulation',players:'Lokaler Splitscreen bis 2 · online',desc:'Für spannende Rennen, Tuning und den direkten Vergleich.'},
+ {name:'Returnal',platforms:['ps5'],type:'Action / Roguelike',players:'Online-Koop für 2',desc:'Anspruchsvolle Sci-Fi-Action, bei der ihr euch gegenseitig unterstützt.'},
+ {name:'Baldur’s Gate 3',platforms:['ps5'],type:'Rollenspiel',players:'Lokaler Splitscreen bis 2 · online bis 4',desc:'Ein riesiges Fantasy-Rollenspiel voller Entscheidungen und gemeinsamer Geschichten.'},
+ {name:'Diablo IV',platforms:['ps5'],type:'Action-RPG',players:'Lokaler Koop bis 2 · online',desc:'Dungeons erkunden, Monster besiegen und immer bessere Ausrüstung finden.'},
+ {name:'Tekken 8',platforms:['ps5'],type:'Kampfspiel',players:'Lokal 2 · online',desc:'Direkte Duelle mit spektakulären Kombos und vielen Kämpfern.'},
+ {name:'EA Sports FC 26',platforms:['ps5'],type:'Fußball',players:'Lokal und online',desc:'Für schnelle Fußballabende, Turniere und gemeinsame Saisons.'},
+ {name:'Ghost of Tsushima – Legends',platforms:['ps5'],type:'Samurai-Koop',players:'Online-Koop bis 4',desc:'Eigenständiger Koop-Modus mit übernatürlichen Gegnern und Teammissionen.'},
+
+ // PC
+ {name:'Deep Rock Galactic',platforms:['pc'],type:'Koop-Shooter',players:'Online-Koop bis 4',desc:'Als Weltraum-Zwerge gemeinsam Höhlen erkunden und Ressourcen abbauen.'},
+ {name:'Lethal Company',platforms:['pc'],type:'Horror / Koop',players:'Online-Koop bis 4',desc:'Schrott auf verlassenen Monden sammeln – wenn euch die Monster lassen.'},
+ {name:'Phasmophobia',platforms:['pc'],type:'Horror / Ermittlungen',players:'Online-Koop bis 4',desc:'Gemeinsam Geister aufspüren und herausfinden, was im Haus lauert.'},
+ {name:'Valheim',platforms:['pc'],type:'Survival / Abenteuer',players:'Koop auf gemeinsamem Server',desc:'Eine nordische Welt erkunden, bauen, craften und Bosse besiegen.'},
+ {name:'Terraria',platforms:['pc'],type:'Sandbox / Abenteuer',players:'Online-Mehrspieler',desc:'Eine riesige 2D-Welt voller Bauen, Entdecken und Bosskämpfe.'},
+ {name:'Sea of Thieves',platforms:['pc'],type:'Piraten / Abenteuer',players:'Crew bis 4',desc:'Mit einer Crew segeln, Schätze suchen und Seeschlachten bestehen.'},
+ {name:'Don’t Starve Together',platforms:['pc'],type:'Survival',players:'Online-Koop',desc:'Gemeinsam eine seltsame Welt überleben und clever Ressourcen verwalten.'},
+ {name:'Left 4 Dead 2',platforms:['pc'],type:'Koop-Shooter',players:'Koop-Kampagne bis 4',desc:'Ein Koop-Klassiker: zusammen durch Zombiehorden kämpfen.'},
+ {name:'Tabletop Simulator',platforms:['pc'],type:'Virtueller Spieleabend',players:'Mehrspieler online',desc:'Brett- und Kartenspiele digital am virtuellen Tisch ausprobieren.'},
+ {name:'Age of Empires IV',platforms:['pc'],type:'Echtzeitstrategie',players:'Mehrspieler online',desc:'Gemeinsam Strategien entwickeln oder in Teams gegeneinander antreten.'}
+];
+const platformNames={switch:'Switch',switch2:'Switch 2',ps5:'PS5',pc:'PC'};
+const platformClasses={switch:'switch',switch2:'switch',ps5:'ps',pc:'pc'};
+function renderVideo(filter='all'){
+ const host=document.getElementById('video-list');host.innerHTML='';
+ videoGames.filter(g=>filter==='all'||g.platforms.includes(filter)).forEach(g=>{
+  const card=document.createElement('article');card.className='rec';
+  const tags=g.platforms.map(p=>`<span class="tag ${platformClasses[p]}">${platformNames[p]}</span>`).join('');
+  card.innerHTML=`<h3>${g.name}</h3><p>${g.desc}</p><p><strong>${g.type}</strong> · ${g.players}</p><div>${tags}</div>`;
+  host.append(card);
+ });
+}
+document.querySelectorAll('#platform-filters button').forEach(button=>button.addEventListener('click',()=>{
+ document.querySelectorAll('#platform-filters button').forEach(b=>b.classList.toggle('active',b===button));
+ renderVideo(button.dataset.filter);
+}));
+const boardGames=[
+ {name:'Sky Team',time:'15 Min.',players:'2',mood:['kurz','kooperativ'],desc:'Ein reines Zwei-Personen-Koopspiel: Gemeinsam ein Flugzeug landen.'},
+ {name:'Codenames: Duett',time:'15–30 Min.',players:'2+',mood:['kurz','kooperativ'],desc:'Hinweise geben und gemeinsam die richtigen Wörter finden.'},
+ {name:'The Mind',time:'15–20 Min.',players:'2–4',mood:['kurz','kooperativ'],desc:'Ohne Absprachen Zahlen in der richtigen Reihenfolge ablegen.'},
+ {name:'Patchwork',time:'30 Min.',players:'2',mood:['kurz','strategie'],desc:'Ein gemütliches, taktisches Duell rund um eine Decke aus Stoffteilen.'},
+ {name:'7 Wonders Duel',time:'30 Min.',players:'2',mood:['strategie'],desc:'Ein spannendes Zivilisationsduell mit vielen taktischen Entscheidungen.'},
+ {name:'Jaipur',time:'30 Min.',players:'2',mood:['kurz','strategie'],desc:'Ein schnelles Handelsduell mit einfachen Regeln und viel Wiederspielreiz.'},
+ {name:'Dorfromantik – Das Brettspiel',time:'30–60 Min.',players:'1–6',mood:['kooperativ','strategie'],desc:'Gemeinsam eine idyllische Landschaft puzzeln und Ziele erfüllen.'},
+ {name:'EXIT – Das Spiel',time:'45–90 Min.',players:'1–4',mood:['kooperativ'],desc:'Rätsel lösen, Hinweise kombinieren und zusammen aus dem Abenteuer entkommen.'},
+ {name:'MicroMacro: Crime City',time:'15–45 Min.',players:'1–4',mood:['kooperativ'],desc:'Gemeinsam große Wimmelbilder untersuchen und Kriminalfälle lösen.'},
+ {name:'Cascadia',time:'30–45 Min.',players:'1–4',mood:['strategie'],desc:'Eine entspannte Legelandschaft mit Tieren und Naturmustern erschaffen.'},
+ {name:'Hitster',time:'30 Min.',players:'2–10',mood:['party','kurz'],desc:'Songs zeitlich einordnen – ideal für einen musikalischen Spieleabend.'},
+ {name:'Just One',time:'20 Min.',players:'3–7',mood:['party','kooperativ'],desc:'Ein Wort erraten, während alle möglichst clevere Hinweise geben.'},
+ {name:'Kluster',time:'10–20 Min.',players:'1–4',mood:['party','kurz'],desc:'Magnetsteine geschickt ablegen, ohne dass sie zusammenklacken.'},
+ {name:'Azul',time:'30–45 Min.',players:'2–4',mood:['strategie'],desc:'Wunderschöne Fliesen legen und dabei clever vorausplanen.'},
+ {name:'Bomb Busters',time:'20–40 Min.',players:'2–5',mood:['kooperativ','kurz'],desc:'Als Team Drähte durchschauen und Bomben entschärfen.'},
+ {name:'Dixit',time:'30 Min.',players:'3–8',mood:['party'],desc:'Mit fantasievollen Bildern Geschichten andeuten und Assoziationen erraten.'},
+ {name:'6 nimmt!',time:'30–45 Min.',players:'2–10',mood:['party','kurz'],desc:'Einfach erklärt, schnell gespielt und mit viel Schadenfreude.'},
+ {name:'Carcassonne',time:'35 Min.',players:'2–5',mood:['strategie'],desc:'Landschaften aus Plättchen bauen und Städte, Straßen und Wiesen werten.'},
+ {name:'Die Crew: Reist gemeinsam zum 9. Planeten',time:'20 Min.',players:'2–5',mood:['kooperativ','kurz'],desc:'Ein kooperatives Stichspiel mit immer neuen Missionen.'},
+ {name:'Pandemic',time:'45 Min.',players:'2–4',mood:['kooperativ','strategie'],desc:'Gemeinsam Krankheiten eindämmen und die Welt retten.'},
+ {name:'Wingspan',time:'40–70 Min.',players:'1–5',mood:['strategie'],desc:'Ein wunderschönes Engine-Building-Spiel rund um Vögel und Lebensräume.'},
+ {name:'King of Tokyo',time:'30 Min.',players:'2–6',mood:['party','kurz'],desc:'Als Monster würfeln, Energie sammeln und Tokyo erobern.'},
+ {name:'Camel Up',time:'30–45 Min.',players:'3–8',mood:['party'],desc:'Auf verrückte Kamelrennen wetten und gemeinsam mitfiebern.'},
+ {name:'7 Wonders',time:'30 Min.',players:'3–7',mood:['strategie'],desc:'Eine Zivilisation entwickeln und Karten clever auswählen.'},
+ {name:'Mysterium',time:'45 Min.',players:'2–7',mood:['kooperativ','party'],desc:'Mit geheimnisvollen Bildkarten gemeinsam einen Mordfall lösen.'}
+];
+function renderBoard(filter='all'){
+ const host=document.getElementById('board-list');host.innerHTML='';
+ boardGames.filter(g=>filter==='all'||g.mood.includes(filter)).forEach(g=>{
+  const card=document.createElement('article');card.className='rec';
+  card.innerHTML=`<h3>${g.name}</h3><p>${g.desc}</p><p><strong>${g.time}</strong> · ${g.players} Spieler</p><div>${g.mood.map(m=>`<span class="tag">${({kurz:'Kurz & locker',kooperativ:'Kooperativ',strategie:'Strategie',party:'Party'})[m]}</span>`).join('')}</div>`;
+  host.append(card);
+ });
+}
+document.querySelectorAll('[data-mood]').forEach(button=>button.addEventListener('click',()=>{
+ document.querySelectorAll('[data-mood]').forEach(b=>b.classList.toggle('selected',b===button));
+ renderBoard(button.dataset.mood);
+ document.getElementById('board-suggestion').textContent='Hier sind passende Ideen für eure ausgewählte Stimmung. 💗';
+}));
+renderVideo();renderBoard();
+
+let tBoard=Array(9).fill(''),tActive=true;
+function initTTT(){const b=document.getElementById('ttt-board');b.innerHTML='';tBoard=Array(9).fill('');tActive=true;document.getElementById('ttt-status').textContent='Du bist X.';for(let i=0;i<9;i++){const c=document.createElement('button');c.className='cell';c.type='button';c.setAttribute('aria-label',`Feld ${i+1}`);c.onclick=()=>{if(!tBoard[i]&&tActive){tBoard[i]='X';c.textContent='X';if(checkTTT())return;document.getElementById('ttt-status').textContent='Der Computer überlegt …';setTimeout(aiT,350)}};b.appendChild(c)}}
+function aiT(){const empty=tBoard.map((v,i)=>v===''?i:-1).filter(i=>i>=0);if(!empty.length||!tActive)return;const m=empty[Math.floor(Math.random()*empty.length)];tBoard[m]='O';document.getElementById('ttt-board').children[m].textContent='O';if(!checkTTT())document.getElementById('ttt-status').textContent='Du bist wieder dran!'}
+function checkTTT(){const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];for(const s of wins)if(tBoard[s[0]]&&tBoard[s[0]]===tBoard[s[1]]&&tBoard[s[1]]===tBoard[s[2]]){tActive=false;document.getElementById('ttt-status').textContent=tBoard[s[0]]==='X'?'Du gewinnst! ❤️':'Der Computer gewinnt – Revanche? 💕';return true}if(tBoard.every(Boolean)){tActive=false;document.getElementById('ttt-status').textContent='Unentschieden – noch eine Runde? 💗';return true}return false}
+let ships=[],hits=0;
+function initBS(){const b=document.getElementById('bs-board');b.innerHTML='';hits=0;ships=[];while(ships.length<3){const r=Math.floor(Math.random()*36);if(!ships.includes(r))ships.push(r)}document.getElementById('bs-status').textContent='Finde alle drei Herzen!';for(let i=0;i<36;i++){const c=document.createElement('button');c.type='button';c.className='cell';c.setAttribute('aria-label',`Feld ${i+1}`);c.onclick=()=>{if(c.classList.contains('hit')||c.classList.contains('miss'))return;if(ships.includes(i)){c.classList.add('hit');c.textContent='♥';hits++;document.getElementById('bs-status').textContent=hits===3?'Alle Herzen gefunden! Du bist toll! 💖':`Gefunden: ${hits} von 3 Herzen`}else{c.classList.add('miss');c.textContent='·'}};b.appendChild(c)}}
+initTTT();initBS();
+
+let reactionState='idle',reactionTimer=null,reactionStart=0;
+const reactionArea=document.getElementById('reaction-area'),reactionText=document.getElementById('reaction-text'),reactionStatus=document.getElementById('reaction-status');
+function startReaction(){clearTimeout(reactionTimer);reactionState='waiting';reactionArea.style.background='linear-gradient(135deg,#fff0f6,#f7e9ff)';reactionText.textContent='Warte auf GRÜN …';reactionStatus.textContent='Nicht zu früh tippen!';reactionTimer=setTimeout(()=>{reactionState='ready';reactionStart=performance.now();reactionArea.style.background='linear-gradient(135deg,#d9f9df,#e8fff0)';reactionText.textContent='JETZT TIPpen! 💚'},1200+Math.random()*3000)}
+function tapReaction(){if(reactionState==='idle'){startReaction();return}if(reactionState==='waiting'){clearTimeout(reactionTimer);reactionState='idle';reactionText.textContent='Zu früh! Nochmal versuchen';reactionStatus.textContent='Geduld zahlt sich aus 😄';reactionArea.style.background='';return}if(reactionState==='ready'){const ms=Math.round(performance.now()-reactionStart);reactionState='idle';reactionText.textContent='Tippe hier zum Starten 💗';reactionStatus.textContent=`Deine Reaktionszeit: ${ms} ms ${ms<250?'Wow, blitzschnell! ⚡':'Stark! Noch eine Runde?'}`;reactionArea.style.background=''}}
+reactionArea.addEventListener('click',tapReaction);reactionArea.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tapReaction()}});document.getElementById('reaction-start').addEventListener('click',startReaction);
+</script>
+</body></html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#fff5fa">
+<title>Für Daria – mit Liebe</title>
+<style>
+
+:root{--pink:#d94f88;--pink-dark:#b93670;--rose:#f6a7c4;--ink:#493542;--muted:#806878;--glass:rgba(255,255,255,.78);--line:rgba(217,79,136,.13);--shadow:0 22px 65px rgba(91,42,67,.10)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:28px}
+body{margin:0;font-family:Inter,ui-rounded,"Segoe UI",system-ui,sans-serif;color:var(--ink);background:radial-gradient(ellipse at 12% 8%,#fff 0,transparent 30%),radial-gradient(ellipse at 88% 38%,#e7f5ff 0,transparent 28%),linear-gradient(145deg,#fff8fb 0%,#ffe5ef 52%,#f5eaff 100%);overflow-x:hidden;line-height:1.65}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background-image:radial-gradient(#d94f88 1px,transparent 1px);background-size:27px 27px;z-index:-1}
+a{color:inherit}.wrap{width:min(1080px,calc(100% - 36px));margin-inline:auto}
+header{text-align:center;padding:clamp(42px,8vw,88px) 16px 42px;position:relative}
+.portrait{width:clamp(132px,22vw,205px);height:clamp(132px,22vw,205px);object-fit:cover;border-radius:50%;border:7px solid rgba(255,255,255,.95);box-shadow:0 20px 60px rgba(197,78,123,.22),0 0 0 12px rgba(255,255,255,.25);animation:portraitFloat 6s ease-in-out infinite}
+.eyebrow{letter-spacing:.19em;text-transform:uppercase;font-weight:850;font-size:.74rem;color:#a44b72}
+h1{font-size:clamp(2.55rem,7.5vw,5.1rem);line-height:1.02;letter-spacing:-.055em;margin:22px 0 14px;color:var(--pink);text-wrap:balance}
+header p{font-size:clamp(1rem,2.6vw,1.25rem);color:var(--muted);margin:0 auto;max-width:650px}
+.nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:26px auto 0;max-width:850px}
+.btn,.nav a,.game button{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 19px;border-radius:999px;background:linear-gradient(135deg,#ee82aa,#d94f88);color:white;text-decoration:none;border:1px solid transparent;font:inherit;font-weight:780;cursor:pointer;box-shadow:0 9px 24px rgba(217,78,135,.20);transition:transform .25s ease,box-shadow .25s ease,filter .25s ease}
+.btn:hover,.nav a:hover,.game button:hover{transform:translateY(-3px);box-shadow:0 15px 30px rgba(217,78,135,.27);filter:saturate(1.08)}
+.btn:focus-visible,.nav a:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid #9b5bda;outline-offset:4px}
+.btn.light,.nav a.light{background:rgba(255,255,255,.75);color:#a74470;border-color:#f2c6d8;box-shadow:0 5px 18px rgba(100,50,75,.05)}
+main{padding-bottom:45px}
+.card{background:var(--glass);border:1px solid rgba(255,255,255,.9);border-radius:30px;padding:clamp(23px,4.5vw,42px);margin:22px auto;box-shadow:var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);position:relative;overflow:hidden}
+.card:before{content:"";position:absolute;width:190px;height:190px;border-radius:50%;right:-105px;top:-115px;background:rgba(255,205,225,.28);pointer-events:none}
+h2{font-size:clamp(1.65rem,4vw,2.35rem);color:var(--pink);margin:0 0 8px;text-align:center;letter-spacing:-.035em}
+.sub{text-align:center;color:#866b79;margin:0 0 24px}
+.calendar-frame{min-height:150px;display:grid;place-items:center}
+.calendar-photo{display:block;max-height:620px;width:auto;max-width:100%;object-fit:contain;border-radius:22px;border:5px solid white;box-shadow:0 15px 40px rgba(104,48,76,.15);animation:softEnter .65s cubic-bezier(.2,.8,.2,1)}
+.date-pill{display:inline-block;margin-top:18px;padding:9px 17px;background:#fff0f6;border:1px solid #f7d3e2;border-radius:99px;color:#a84370;font-weight:800}
+.special{font-size:clamp(1.2rem,3vw,1.8rem);line-height:1.65;color:#c03f79;padding:clamp(22px,4vw,34px);background:linear-gradient(135deg,#fff1f7,#fff);border:1px solid #ffe0ec;border-radius:24px;text-align:center}
+.music-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;margin:22px 0}
+.music-buttons button{border:1px solid #f0c1d4;background:white;color:#a74270;border-radius:99px;padding:10px 16px;font:inherit;font-weight:750;cursor:pointer;transition:.2s}
+.music-buttons button:hover{transform:translateY(-2px);border-color:#df4f88}
+.music-buttons button.active{background:linear-gradient(135deg,#ee82aa,#d94f88);color:#fff;border-color:transparent;box-shadow:0 8px 20px #d94e8630}
+.music-note{text-align:center;min-height:2em;color:#805d6e}
+audio{width:100%;margin-top:8px;accent-color:var(--pink)}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:16px}
+.gallery img{width:100%;height:270px;object-fit:cover;border-radius:21px;box-shadow:0 9px 26px rgba(85,48,64,.10);transition:transform .45s cubic-bezier(.2,.8,.2,1),filter .35s;cursor:zoom-in}
+.gallery img:hover{transform:translateY(-5px) scale(1.018);filter:saturate(1.08)}
+.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px}
+.game{text-align:center;padding:22px 16px;border:1px solid #f8e3ec;border-radius:24px;background:linear-gradient(145deg,#fffafd,#fff3f8)}
+.game h3{margin:0;color:#98506f}
+.grid{display:grid;gap:7px;justify-content:center;margin:18px auto}
+.ttt{grid-template-columns:repeat(3,clamp(54px,12vw,74px))}
+.bs{grid-template-columns:repeat(6,clamp(29px,7vw,43px))}
+.cell{width:clamp(54px,12vw,74px);height:clamp(54px,12vw,74px);border:1px solid #f4d7e4;border-radius:14px;background:#fff0f6;color:#b54575;font-size:1.5rem;font-weight:850;cursor:pointer;transition:transform .16s,background .2s}
+.cell:hover:not(:disabled){transform:scale(1.06)}
+.bs .cell{width:clamp(29px,7vw,43px);height:clamp(29px,7vw,43px);font-size:1rem;background:#e6f5fc}
+.cell.hit{background:#e95b8d;color:white}.cell.miss{background:#e9e4e9;color:#7d7280}
+.game button{border:0;padding:10px 17px}
+.game-status{min-height:1.5em;color:#9e4770;font-weight:650}
+footer{text-align:center;padding:18px 10px 48px;color:#906f80}
+footer .heart{font-size:2rem;animation:heartbeat 1.8s ease-in-out infinite}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.reveal.is-visible{opacity:1;transform:translateY(0)}
+.lightbox{position:fixed;inset:0;background:rgba(35,19,30,.88);display:grid;place-items:center;padding:24px;z-index:1000;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+.lightbox.open{opacity:1;visibility:visible}
+.lightbox img{max-width:min(100%,1100px);max-height:82vh;object-fit:contain;border-radius:14px;box-shadow:0 20px 70px #0005}
+.lightbox button{position:absolute;top:18px;right:20px;width:46px;height:46px;border:0;border-radius:50%;background:#fff;color:#9d3e6b;font-size:1.5rem;cursor:pointer}
+@keyframes softEnter{from{opacity:0;transform:translateY(15px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes portraitFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes heartbeat{0%,100%{transform:scale(1)}12%{transform:scale(1.13)}24%{transform:scale(1)}}
+@media(max-width:600px){.wrap{width:min(100% - 24px,1080px)}header{padding-top:36px}.nav{gap:8px}.nav a{padding:10px 14px;font-size:.92rem}.card{border-radius:24px}.gallery img{height:230px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+
+.anniversary-countdown{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;max-width:690px;margin:26px auto 8px}
+.countdown-unit{padding:18px 10px;border-radius:20px;background:linear-gradient(145deg,#fff,#fff0f6);border:1px solid #f7d8e5;text-align:center;box-shadow:0 8px 22px rgba(120,55,85,.06)}
+.countdown-unit strong{display:block;font-size:clamp(1.8rem,5vw,3rem);line-height:1.1;color:#d94f88;font-variant-numeric:tabular-nums}
+.countdown-unit span{display:block;margin-top:6px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:#967184;font-weight:800}
+.countdown-caption{text-align:center;color:#a34370;font-weight:750;margin:18px 0 0}
+.spotify-shell{max-width:790px;margin:24px auto 0;padding:12px;border-radius:26px;background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(255,240,247,.82));border:1px solid #f4d9e5;box-shadow:0 16px 42px rgba(100,45,75,.09)}
+.spotify-topline{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 10px 14px}
+.spotify-brand{display:flex;align-items:center;gap:10px;font-weight:850;color:#315b43}
+.spotify-dot{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:#1ed760;color:#102d1c;font-weight:900;font-size:1.15rem}
+.spotify-frame{display:block;width:100%;height:352px;border:0;border-radius:18px;background:#f3eaf0}
+.spotify-hint{font-size:.88rem;color:#806878;text-align:center;margin:12px 8px 4px}
+@media(max-width:520px){.anniversary-countdown{gap:7px}.countdown-unit{padding:14px 4px;border-radius:15px}.countdown-unit span{font-size:.65rem}.spotify-topline{align-items:flex-start;flex-direction:column}.spotify-frame{height:352px}}
+
+</style></head><body>
+<header class="wrap"><img class="portrait" src="Titelbild.jpg" alt="Ein besonderer Moment"><div class="eyebrow">Für meinen Lieblingsmenschen</div><h1>Für Daria – mit Liebe</h1><p>Jeder Tag mit dir ist ein kleines Wunder. 💗</p><nav class="nav"><a href="#kalender">📅 Unser Kalender</a><a class="light" href="#musik">🎶 Unsere Musik</a><a class="light" href="#galerie">📸 Erinnerungen</a><a class="light" href="spiele.html">🎮 Spielen</a><a class="light" href="#jahrestag">💞 Jahrestag</a><a class="light" href="tierwelt.html">🐄 Tierwelt</a></nav></header>
+<main class="wrap">
+<section class="card" id="kalender"><h2>Dein Moment heute ✨</h2><p class="sub">Ein kleines Bild nur für diesen Tag.</p><div class="calendar-frame" id="cal-container" aria-live="polite"></div><div style="text-align:center"><span class="date-pill" id="date-label"></span></div></section>
+<section class="card" id="musik"><h2>🎶 Unser Soundtrack</h2><p class="sub">Such dir einen Song aus und denk an uns.</p><div class="music-buttons" id="music-btns"></div><p class="music-note" id="musicText">Ein Lied, eine Erinnerung, ganz viel Liebe.</p><audio id="audio" controls preload="none"></audio></section>
+
+<section class="card reveal" id="jahrestag">
+  <h2>💞 Unser nächster Jahrestag</h2>
+  <p class="sub">Noch ein bisschen Vorfreude bis zum 18. August.</p>
+  <div class="anniversary-countdown" id="anniversary-countdown" aria-live="polite">
+    <div class="countdown-unit"><strong id="cd-days">—</strong><span>Tage</span></div>
+    <div class="countdown-unit"><strong id="cd-hours">—</strong><span>Stunden</span></div>
+    <div class="countdown-unit"><strong id="cd-minutes">—</strong><span>Minuten</span></div>
+    <div class="countdown-unit"><strong id="cd-seconds">—</strong><span>Sekunden</span></div>
+  </div>
+  <p class="countdown-caption" id="countdown-caption">Jeder Tag mit dir ist ein Grund zum Feiern. 💗</p>
+</section>
+<section class="card reveal" id="playlist">
+  <h2>🎧 Unser Spotify-Soundtrack</h2>
+  <p class="sub">Unsere gemeinsame Playlist – für Zuhause, unterwegs und jeden kleinen Lieblingsmoment.</p>
+  <div class="spotify-shell">
+    <div class="spotify-topline"><div class="spotify-brand"><span class="spotify-dot">♫</span><span>Unsere gemeinsame Playlist</span></div><a class="btn light" id="spotify-open" href="https://open.spotify.com/playlist/6f511doDQYv9wDXM13ERYR" target="_blank" rel="noopener noreferrer">In Spotify öffnen ↗</a></div>
+    <!-- Eure gemeinsame Spotify-Playlist -->
+    <iframe class="spotify-frame" id="spotify-embed" title="Unsere gemeinsame Spotify-Playlist" src="https://open.spotify.com/embed/playlist/6f511doDQYv9wDXM13ERYR?utm_source=generator&theme=0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <p class="spotify-hint">Hinweis: Die Wiedergabe und Songauswahl werden direkt über den offiziellen Spotify-Player gesteuert.</p>
+  </div>
+</section>
+
+<section class="card" id="galerie"><h2>📸 Galerie der Liebe</h2><p class="sub">Kleine Erinnerungen, die mein Herz groß machen.</p><div class="gallery"><img src="2.jpg" alt="Gemeinsame Erinnerung eins" loading="lazy"><img src="4.jpg" alt="Gemeinsame Erinnerung zwei" loading="lazy" data-stem="4"><img src="5.jpg" alt="Gemeinsame Erinnerung drei" loading="lazy"></div></section>
+<section class="card reveal" id="spiele"><h2>🎮 Zeit für eine Spielrunde?</h2><p class="sub">Unsere kleinen Spiele und eure nächste gemeinsame Spiele-Auswahl warten auf einer eigenen Seite.</p><div style="text-align:center"><a class="btn" href="spiele.html">Zur Spielewelt entdecken →</a></div></section>
+</main><footer class="wrap"><div class="heart">💞</div><p>Du machst die Welt schöner – einfach, weil es dich gibt.</p></footer>
+<script>
+const songs=[{f:'Musik1.mp3',t:'Dein Strahlen macht mich glücklich.'},{f:'Musik2.mp3',t:'Ein kleiner Soundtrack für große Gefühle.'},{f:'Musik3.mp3',t:'Für unsere goldenen Momente.'},{f:'Musik4.mp3',t:'Ein Lied voller Liebe.'},{f:'Musik5.mp3',t:'Für schöne Erinnerungen.'},{f:'Musik6.mp3',t:'Ich hab dich unendlich lieb.'}];
+function calendarFile(n){if(n<=100)return `1_Kalender_${n}`;if(n<=200)return `2_Kalender_${n-100}`;if(n<=300)return `3_Kalender_${n-200}`;return `4_Kalender_${n-300}`}
+function setupKalender(){const now=new Date(),year=now.getFullYear(),month=now.getMonth(),day=now.getDate(),container=document.getElementById('cal-container');const isLeap=(year%4===0&&year%100!==0)||year%400===0;document.getElementById('date-label').textContent=now.toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long',year:'numeric'});if(month===1&&day===29&&isLeap){container.innerHTML='<div class="special">💌 Einen 29. Februar gibt es nur ganz selten – aber meine Liebe zu dir ist jeden Tag etwas Besonderes. Heute gehört dieser zusätzliche Tag nur uns. Ich liebe dich! 💖</div>';return}const start=new Date(year,0,0);let n=Math.floor((now-start)/86400000);if(isLeap&&month>1)n--;const base=calendarFile(n);const img=document.createElement('img');img.className='calendar-photo';img.alt='Dein Kalenderbild für heute';img.loading='eager';let ext=['jpg','jpeg','png','webp'];let i=0;function tryExt(){if(i>=ext.length){container.innerHTML='<p class="sub">Heute wartet ein kleines bisschen Liebe auf dich. 💗</p>';return}img.src=`kalender/${base}.${ext[i++]}`}img.onerror=tryExt;container.replaceChildren(img);tryExt()}
+const audio=document.getElementById('audio'),mText=document.getElementById('musicText');songs.forEach((s,i)=>{const b=document.createElement('button');b.type='button';b.textContent=`♫ Lied ${i+1}`;b.onclick=()=>{audio.src=s.f;audio.play().catch(()=>{});mText.textContent=s.t;document.querySelectorAll('.music-buttons button').forEach(x=>x.classList.remove('active'));b.classList.add('active')};document.getElementById('music-btns').appendChild(b)});
+let tBoard=Array(9).fill(''),tActive=true;function initTTT(){const b=document.getElementById('ttt-board');b.innerHTML='';tBoard=Array(9).fill('');tActive=true;document.getElementById('ttt-status').textContent='Du bist X.';for(let i=0;i<9;i++){const c=document.createElement('button');c.className='cell';c.type='button';c.setAttribute('aria-label',`Feld ${i+1}`);c.onclick=()=>{if(!tBoard[i]&&tActive){tBoard[i]='X';c.textContent='X';if(checkTTT())return;document.getElementById('ttt-status').textContent='Ich überlege …';setTimeout(aiT,350)}};b.appendChild(c)}}function aiT(){const empty=tBoard.map((v,i)=>v===''?i:-1).filter(i=>i>=0);if(!empty.length||!tActive)return;const m=empty[Math.floor(Math.random()*empty.length)];tBoard[m]='O';document.getElementById('ttt-board').children[m].textContent='O';if(!checkTTT())document.getElementById('ttt-status').textContent='Du bist wieder dran!'}function checkTTT(){const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];for(const s of wins)if(tBoard[s[0]]&&tBoard[s[0]]===tBoard[s[1]]&&tBoard[s[1]]===tBoard[s[2]]){tActive=false;document.getElementById('ttt-status').textContent=(tBoard[s[0]]==='X'?'Du gewinnst! ❤️':'Ich hab gewonnen – Revanche? 💕');return true}if(tBoard.every(Boolean)){tActive=false;document.getElementById('ttt-status').textContent='Unentschieden – noch eine Runde? 💗';return true}return false}
+let ships=[],hits=0;function initBS(){const b=document.getElementById('bs-board');b.innerHTML='';hits=0;ships=[];while(ships.length<3){const r=Math.floor(Math.random()*36);if(!ships.includes(r))ships.push(r)}document.getElementById('bs-status').textContent='Finde alle drei Herzen!';for(let i=0;i<36;i++){const c=document.createElement('button');c.type='button';c.className='cell';c.setAttribute('aria-label',`Feld ${i+1}`);c.onclick=()=>{if(c.classList.contains('hit')||c.classList.contains('miss'))return;if(ships.includes(i)){c.classList.add('hit');c.textContent='♥';hits++;document.getElementById('bs-status').textContent=hits===3?'Alle Herzen gefunden! Du bist toll! 💖':`Gefunden: ${hits} von 3 Herzen`;if(hits===3)b.querySelectorAll('button').forEach(x=>x.disabled=true)}else{c.classList.add('miss');c.textContent='·'}};b.appendChild(c)}}
+// Versucht bei der zweiten Galerie-Datei auch übliche Dateiendungen und Großschreibung.
+const gallerySecond=document.querySelector('.gallery img[data-stem="4"]');
+if(gallerySecond){const tries=['4.jpg','4.JPG','4.jpeg','4.JPEG','4.png','4.PNG','4.webp','4.WEBP','4'];let attempt=0;gallerySecond.addEventListener('error',function retryGallery(){if(attempt<tries.length){gallerySecond.src=tries[attempt++]}else{gallerySecond.style.display='none'}});}
+setupKalender();initTTT();initBS();
+</script>
+<script>
+(() => {
+  const sections = document.querySelectorAll('main .card');
+  sections.forEach(section => section.classList.add('reveal'));
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.12});
+  sections.forEach(section => revealObserver.observe(section));
+
+  const overlay = document.createElement('div');
+  overlay.className = 'lightbox';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-label', 'Bildansicht');
+  overlay.innerHTML = '<button type="button" aria-label="Bildansicht schließen">×</button><img alt="">';
+  document.body.appendChild(overlay);
+  const preview = overlay.querySelector('img');
+  const close = () => { overlay.classList.remove('open'); preview.removeAttribute('src'); };
+  overlay.querySelector('button').addEventListener('click', close);
+  overlay.addEventListener('click', event => { if (event.target === overlay) close(); });
+  document.addEventListener('keydown', event => { if (event.key === 'Escape') close(); });
+  document.querySelectorAll('.gallery img').forEach(img => {
+    img.addEventListener('click', () => {
+      preview.src = img.currentSrc || img.src;
+      preview.alt = img.alt;
+      overlay.classList.add('open');
+    });
+  });
+})();
+</script>
+
+
+<script>
+(() => {
+  const ids = ['cd-days','cd-hours','cd-minutes','cd-seconds'];
+  const caption = document.getElementById('countdown-caption');
+  function updateAnniversaryCountdown() {
+    const now = new Date();
+    let target = new Date(now.getFullYear(), 7, 18, 0, 0, 0);
+    if (now >= target) target = new Date(now.getFullYear() + 1, 7, 18, 0, 0, 0);
+    const diff = Math.max(0, target.getTime() - now.getTime());
+    const values = [
+      Math.floor(diff / 86400000),
+      Math.floor((diff % 86400000) / 3600000),
+      Math.floor((diff % 3600000) / 60000),
+      Math.floor((diff % 60000) / 1000)
+    ];
+    ids.forEach((id, i) => { const el = document.getElementById(id); if (el) el.textContent = String(values[i]).padStart(2,'0'); });
+    if (caption) caption.textContent = `Bis zum 18. August – und bis zu einem weiteren Kapitel voller gemeinsamer Erinnerungen. 💗`;
+  }
+  updateAnniversaryCountdown();
+  window.setInterval(updateAnniversaryCountdown, 1000);
+})();
+</script>
+
+</body></html>
